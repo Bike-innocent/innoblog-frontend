@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
-
 
 function Register() {
   const [name, setName] = useState('');
@@ -11,14 +10,15 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setErrors({ password: ["Passwords do not match"] });
       return;
     }
+
     try {
       const response = await axiosInstance.post('/register', {
         name,
@@ -26,24 +26,22 @@ function Register() {
         password,
         password_confirmation: confirmPassword,
       });
+      console.log('Registration and login successful:', response.data);
+
       localStorage.setItem('token', response.data.access_token);
       setErrors({});
-      
-      // Fetch the user information and update the user context
-      const userResponse = await axiosInstance.get('/profile/user', {
-        headers: {
-          Authorization: `Bearer ${response.data.access_token}`,
-        },
-      });
-      setUser(userResponse.data.user);
 
-      
-      
-      navigate('/login');
+      // Navigate to home after successful registration and login
+      navigate('/home');
     } catch (error) {
+      console.error('Registration error:', error); // Log the entire error object
+      console.log('Error response:', error.response); // Log the error response object
+
       if (error.response && error.response.data.errors) {
+        console.log('Validation errors:', error.response.data.errors); // Log validation errors
         setErrors(error.response.data.errors);
       } else {
+        console.log('An unexpected error occurred');
         setErrors({ general: "An unexpected error occurred. Please try again later." });
       }
     }
