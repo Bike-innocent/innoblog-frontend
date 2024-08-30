@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import { FaGoogle } from 'react-icons/fa'; // Import the Google icon
 
 function Register() {
   const [name, setName] = useState('');
@@ -45,6 +46,13 @@ function Register() {
         setErrors({ general: "An unexpected error occurred. Please try again later." });
       }
     }
+  };
+
+  // Handle Google Login
+  const handleGoogleLogin = () => {
+    // Redirect to the Google OAuth endpoint on your backend
+    window.location.href = 'https://backend.innoblog.com.ng/auth/google'; // Use your backend URL
+    // For production, use: 'https://backend.innoblog.com.ng/auth/google'
   };
 
   return (
@@ -91,7 +99,7 @@ function Register() {
           <p className="text-red-600">Passwords do not match</p>
         )}
 
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600">
+        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 w-full">
           Register
         </button>
         
@@ -101,6 +109,21 @@ function Register() {
           Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
         </p>
       </form>
+
+      {/* Divider */}
+      <div className="mt-6 flex items-center justify-center">
+        <div className="border-t border-gray-300 w-full"></div>
+        <span className="mx-4 text-gray-500">OR</span>
+        <div className="border-t border-gray-300 w-full"></div>
+      </div>
+
+      {/* Google Login Button */}
+      <button
+        onClick={handleGoogleLogin}
+        className="mt-4 flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+      >
+        <FaGoogle className="mr-2" /> Register with Google
+      </button>
     </div>
   );
 }

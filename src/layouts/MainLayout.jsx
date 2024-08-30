@@ -25,10 +25,17 @@ function MainLayout() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate('/login');
+    const handleLogout = async () => {
+        try {
+            await axiosInstance.post('/logout');
+            localStorage.removeItem('token');
+            navigate('/login');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
     };
+    
+    
 
     return (
         <>

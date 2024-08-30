@@ -95,7 +95,7 @@ const PostDropdown = ({ post, setSuccessMessage }) => {
       <Report postId={post.id} isOpen={isReportOpen} onClose={closeReportModal} />
 
       {/* Share Dialog */}
-      <Share isOpen={isShareOpen} onClose={closeShareModal} postUrl={`http://localhost:5173/posts/${post.slug}`} />
+      <Share isOpen={isShareOpen} onClose={closeShareModal} postUrl={`https://innoblog.com.ng/posts/${post.slug}`} />
     </>
   );
 };
