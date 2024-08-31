@@ -33,7 +33,7 @@ function Register() {
       setErrors({});
 
       // Navigate to home after successful registration and login
-      navigate('/home');
+      navigate('/');
     } catch (error) {
       console.error('Registration error:', error); // Log the entire error object
       console.log('Error response:', error.response); // Log the error response object

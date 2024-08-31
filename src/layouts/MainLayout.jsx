@@ -5,6 +5,7 @@ import { BsPencilSquare, BsJournalText, BsPeople, BsGear, BsBoxArrowRight } from
 import AuthNavbar from '../components/navbars/AuthNavbar';
 import Footer from '../components/Footer';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
 import axiosInstance from '../axiosInstance';
 
@@ -27,20 +28,21 @@ function MainLayout() {
     };
    
 
-    const queryClient = useQueryClient();
-    
     const handleLogout = async () => {
-      try {
-        await axiosInstance.post('/logout');
-    
-        localStorage.removeItem('authToken');
-        queryClient.clear(); // Clear cached data
-        navigate('/login');
-      } catch (error) {
-        console.error('Error logging out:', error);
-      }
+        try {
+            const response = await axiosInstance.post('/logout');
+            console.log('Logout successful:', response.data);
+
+            // Clear any auth-related items in localStorage if needed
+            localStorage.removeItem('auth_token');
+
+            // Redirect to the login page
+            navigate('/login');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
     };
-    
+
       
     
     

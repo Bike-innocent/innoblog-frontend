@@ -25,7 +25,7 @@ function Login() {
       setGeneralError('');
 
       // Redirect to the previous page or the home page if there's no previous page
-      const previousPath = location.state?.from || '/home';
+      const previousPath = location.state?.from || '/';
       navigate(previousPath);
     } catch (error) {
       console.error('Login error:', error); // Log the entire error object
@@ -76,7 +76,8 @@ function Login() {
         <p className="mt-4">
           <Link to="/forgot-password" className="text-blue-700">Forgot password?</Link>
         </p>
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600">
+        
+        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 w-full">
           Login
         </button>
 
