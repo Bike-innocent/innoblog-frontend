@@ -18,7 +18,9 @@ function Login() {
       const response = await axiosInstance.post('/login', { email, password });
       console.log('Login successful:', response.data);
       
-      localStorage.setItem('token', response.data.access_token);
+      // localStorage.setItem('token', response.data.access_token);
+      localStorage.setItem('authToken', response.data.access_token);
+
       setErrors({});
       setGeneralError('');
 
@@ -47,7 +49,8 @@ function Login() {
 
   // Handle Google Login
   const handleGoogleLogin = () => {
-    window.location.href = 'https://backend.innoblog.com.ng/auth/google';  // Update this URL as needed
+   // window.location.href = 'https://backend.innoblog.com.ng/auth/google';  // Update this URL as needed
+    window.location.href = 'http://localhost:8000/auth/google';  // Update this URL as needed
   };
 
   return (
@@ -84,19 +87,19 @@ function Login() {
       </form>
 
       {/* Divider */}
-      <div className="mt-6 flex items-center justify-center">
+      {/* <div className="mt-6 flex items-center justify-center">
         <div className="border-t border-gray-300 w-full"></div>
         <span className="mx-4 text-gray-500">OR</span>
         <div className="border-t border-gray-300 w-full"></div>
-      </div>
+      </div> */}
 
       {/* Google Login Button */}
-      <button
+      {/* <button
         onClick={handleGoogleLogin}
         className="mt-4 flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
       >
         <FaGoogle className="mr-2" />  Login with Google
-      </button>
+      </button> */}
     </div>
   );
 }

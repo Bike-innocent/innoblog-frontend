@@ -4,7 +4,8 @@ import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai';
 import { BsPencilSquare, BsJournalText, BsPeople, BsGear, BsBoxArrowRight } from 'react-icons/bs';
 import AuthNavbar from '../components/navbars/AuthNavbar';
 import Footer from '../components/Footer';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+
 import axiosInstance from '../axiosInstance';
 
 
@@ -24,16 +25,25 @@ function MainLayout() {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+   
 
+    const queryClient = useQueryClient();
+    
     const handleLogout = async () => {
-        try {
-            await axiosInstance.post('/logout');
-            localStorage.removeItem('token');
-            navigate('/login');
-        } catch (error) {
-            console.error('Error logging out:', error);
-        }
+      try {
+        await axiosInstance.post('/logout');
+    
+        localStorage.removeItem('authToken');
+        queryClient.clear(); // Clear cached data
+        navigate('/login');
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
     };
+    
+      
+    
+    
     
     
 
@@ -52,7 +62,7 @@ function MainLayout() {
                     <div className="flex flex-col flex-1  overflow-y-auto">
                         <nav className="flex-1  space-y-2 mt-3">
                             <NavLink
-                                to="/home"
+                                to="/"
                                 onClick={toggleSidebar}
                                 className={({ isActive }) =>
                                     isActive

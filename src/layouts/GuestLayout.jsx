@@ -9,7 +9,7 @@ import Guest from '../components/navbars/Guest';
 function GuestLayout() {
   return (
     <div className="min-h-screen flex flex-col justify-between">
-   {/* <Guest/> */}
+   <Guest/>
       <main className="w-full max-w-md p-6 bg-white rounded shadow-md mx-auto">
         <Outlet />
      
