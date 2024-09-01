@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
-import { FaGoogle } from 'react-icons/fa'; // Import the Google icon
 
 function Register() {
   const [name, setName] = useState('');
@@ -27,32 +26,22 @@ function Register() {
         password,
         password_confirmation: confirmPassword,
       });
-      console.log('Registration and login successful:', response.data);
 
       localStorage.setItem('authToken', response.data.access_token);
       setErrors({});
 
-      // Navigate to home after successful registration and login
-      navigate('/');
+      // Retrieve the previous path or default to home
+      const previousPath = sessionStorage.getItem('previousPath') || '/home';
+      navigate(previousPath);
     } catch (error) {
-      console.error('Registration error:', error); // Log the entire error object
-      console.log('Error response:', error.response); // Log the error response object
+      console.error('Registration error:', error);
 
       if (error.response && error.response.data.errors) {
-        console.log('Validation errors:', error.response.data.errors); // Log validation errors
         setErrors(error.response.data.errors);
       } else {
-        console.log('An unexpected error occurred');
         setErrors({ general: "An unexpected error occurred. Please try again later." });
       }
     }
-  };
-
-  // Handle Google Login
-  const handleGoogleLogin = () => {
-    // Redirect to the Google OAuth endpoint on your backend
-    //window.location.href = 'https://backend.innoblog.com.ng/auth/google'; // Use your backend URL
-    window.location.href = 'http://localhost:8000/auth/google'; 
   };
 
   return (
@@ -109,21 +98,6 @@ function Register() {
           Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
         </p>
       </form>
-
-      {/* Divider */}
-      {/* <div className="mt-6 flex items-center justify-center">
-        <div className="border-t border-gray-300 w-full"></div>
-        <span className="mx-4 text-gray-500">OR</span>
-        <div className="border-t border-gray-300 w-full"></div>
-      </div> */}
-
-      {/* Google Login Button */}
-      {/* <button
-        onClick={handleGoogleLogin}
-        className="mt-4 flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-      >
-        <FaGoogle className="mr-2" /> Register with Google
-      </button> */}
     </div>
   );
 }

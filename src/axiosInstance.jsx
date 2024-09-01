@@ -4,8 +4,7 @@ import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 
 const axiosInstance = axios.create({
-  //baseURL: 'http://localhost:8000/api',
-  baseURL: 'https://backend.innoblog.com.ng/api', // Production backend URL
+  baseURL: 'http://localhost:8000/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -19,17 +18,14 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     try {
-      // Check if CSRF token is present
       const xsrfTokenExists = document.cookie.includes('XSRF-TOKEN');
       
       if (!xsrfTokenExists) {
-        await axios.get('https://backend.innoblog.com.ng/sanctum/csrf-cookie', {
-       //await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+        await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
           withCredentials: true,
         });
       }
 
-      // Attach auth token if available
       const token = localStorage.getItem('authToken');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -50,19 +46,18 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      const previousPath = window.location.pathname;
+      const currentPath = window.location.pathname;
 
       if (error.response.status === 401) {
-        // Unauthorized, open login page
+        // Save the current path before redirecting to login, excluding login and register pages
+        if (currentPath !== '/login' && currentPath !== '/register') {
+          sessionStorage.setItem('previousPath', currentPath);
+        }
         window.location.href = '/login';
       } else if (error.response.status === 403) {
-        // Forbidden, redirect to unauthorized page
         window.location.href = '/unauthorized';
-      
       } else if (error.response.status === 404) {
-        // Not found, redirect to not found page
         window.location.href = '/not-found';
-       
       }
     } else {
       console.error('Unexpected error:', error);
@@ -72,10 +67,3 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
-
-
-
-
-
-
-
