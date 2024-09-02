@@ -24,7 +24,7 @@ function Login() {
       setGeneralError('');
 
       // Redirect to the previous page or home if there's no previous page
-      const previousPath = sessionStorage.getItem('previousPath') || '/home';
+      const previousPath = sessionStorage.getItem('previousPath') || '/';
       sessionStorage.removeItem('previousPath'); // Clean up the stored path
       navigate(previousPath);
     } catch (error) {

@@ -31,7 +31,7 @@ function Register() {
       setErrors({});
 
       // Retrieve the previous path or default to home
-      const previousPath = sessionStorage.getItem('previousPath') || '/home';
+      const previousPath = sessionStorage.getItem('previousPath') || '/';
       navigate(previousPath);
     } catch (error) {
       console.error('Registration error:', error);

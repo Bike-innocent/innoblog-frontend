@@ -45,7 +45,7 @@ const SubcategoryTab = ({ selectedCategory, subcategories }) => {
 
   if (!selectedCategory) {
     return (
-      <div className="container mx-auto my-4">
+      <div className="container mx-auto my-6">
         <HeaderSection />
       </div>
     );

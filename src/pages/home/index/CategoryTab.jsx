@@ -55,7 +55,7 @@ const CategoryTab = ({ onSelectCategory }) => {
   }
 
   return (
-    <div className="relative my-categorytab">
+    <div className=" mr-auto container w-[96%] xl:w-[78%] shadow-sm fixed top-16 h-10 bg-white z-10">
       <button
         onClick={scrollLeft}
         className="absolute left-0 z-10 bg-white p-2 shadow-md rounded-full hidden sm:flex"
@@ -63,16 +63,16 @@ const CategoryTab = ({ onSelectCategory }) => {
       >
         <ChevronLeftIcon className="h-5 w-5" />
       </button>
-      <div className="overflow-hidden whitespace-nowrap flex-grow px-8">
+      <div className=" overflow-hidden whitespace-nowrap flex-grow ">
         <Tab.Group>
-          <Tab.List ref={tabListRef} className="flex space-x-4 overflow-x-auto scrollbar-hide">
+          <Tab.List ref={tabListRef} className="flex mt-0 space-x-1 md:space-x-3 overflow-x-auto scrollbar-hide sm:px-8 mr-4">
             <Tab>
               {({ selected }) => (
                 <div
                   onClick={() => handleCategorySelect(null)}
-                  className={`whitespace-nowrap px-3 py-2 cursor-pointer ${selected ? 'border-b-2 border-blue-500 text-blue-500 font-bold' : ''}`}
+                  className={`whitespace-nowrap px-3 py-1 cursor-pointer ${selected ? 'border-b-2 border-blue-500 text-blue-500 font-bold focus:border-none' : 'focus:border-none border-none'}`}
                 >
-                  All
+                  All 
                 </div>
               )}
             </Tab>
@@ -81,7 +81,7 @@ const CategoryTab = ({ onSelectCategory }) => {
                 {({ selected }) => (
                   <div
                     onClick={() => handleCategorySelect(category)}
-                    className={`whitespace-nowrap focus:outline-none px-3 py-2 cursor-pointer ${selected ? 'border-b-2 border-blue-500 text-blue-500 focus:outline-none font-bold' : 'outline-none focus:outline-none border-none'}`}
+                    className={`whitespace-nowrap focus:outline-none px-2 py-1 cursor-pointer ${selected ? 'border-b-2 border-blue-500 text-blue-500 focus:outline-none font-bold focus:border-none' : 'outline-none focus:outline-none border-none'}`}
                   >
                     {category.name}
                   </div>

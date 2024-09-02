@@ -1,10 +1,8 @@
 import axios from 'axios';
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8000/api',
+  //baseURL: 'https://backend.innoblog.com.ng/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -21,7 +19,8 @@ axiosInstance.interceptors.request.use(
       const xsrfTokenExists = document.cookie.includes('XSRF-TOKEN');
       
       if (!xsrfTokenExists) {
-        await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+       await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+       // await axios.get('https://backend.innoblog.com.ng/sanctum/csrf-cookie', {
           withCredentials: true,
         });
       }
@@ -54,8 +53,6 @@ axiosInstance.interceptors.response.use(
           sessionStorage.setItem('previousPath', currentPath);
         }
         window.location.href = '/login';
-      } else if (error.response.status === 403) {
-        window.location.href = '/unauthorized';
       } else if (error.response.status === 404) {
         window.location.href = '/not-found';
       }
