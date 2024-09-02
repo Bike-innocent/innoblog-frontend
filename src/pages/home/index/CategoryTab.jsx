@@ -55,7 +55,7 @@ const CategoryTab = ({ onSelectCategory }) => {
   }
 
   return (
-    <div className=" mr-auto container w-[96%] xl:w-[78%] shadow-sm fixed top-16 h-10 bg-white z-10">
+    <div className="container mx-auto pt-1 bg-gray-100 left-0 sm:left-auto w-full xl:w-[75%] sm:shadow-sm shadow-md fixed top-16 h-10  z-10">
       <button
         onClick={scrollLeft}
         className="absolute left-0 z-10 bg-white p-2 shadow-md rounded-full hidden sm:flex"
@@ -63,14 +63,14 @@ const CategoryTab = ({ onSelectCategory }) => {
       >
         <ChevronLeftIcon className="h-5 w-5" />
       </button>
-      <div className=" overflow-hidden whitespace-nowrap flex-grow ">
+      <div className=" overflow-hidden whitespace-nowrap flex-grow m-0">
         <Tab.Group>
-          <Tab.List ref={tabListRef} className="flex mt-0 space-x-1 md:space-x-3 overflow-x-auto scrollbar-hide sm:px-8 mr-4">
+          <Tab.List ref={tabListRef} className="flex mt-0 space-x-1 md:space-x-3 overflow-x-auto scrollbar-hide sm:px-8 ">
             <Tab>
               {({ selected }) => (
                 <div
                   onClick={() => handleCategorySelect(null)}
-                  className={`whitespace-nowrap px-3 py-1 cursor-pointer ${selected ? 'border-b-2 border-blue-500 text-blue-500 font-bold focus:border-none' : 'focus:border-none border-none'}`}
+                  className={`whitespace-nowrap  ml-1 px-3 py-1 cursor-pointer ${selected ? 'border-b-2 border-blue-500 text-blue-500 font-bold focus:border-none' : 'focus:border-none border-none'}`}
                 >
                   All 
                 </div>

@@ -12,9 +12,9 @@ function Index() {
     };
 
     return (
-        <div className="m-0 container mx-auto">
+        <div className="mx-auto container">
             <CategoryTab onSelectCategory={handleSelectCategory} />
-            <div className='mt-4 m-1'>
+            <div className='mt-4'>
             <SubcategoryTab selectedCategory={selectedCategory} subcategories={subcategories} />
             </div>
            
