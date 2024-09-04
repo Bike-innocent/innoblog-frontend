@@ -98,3 +98,15 @@ overflow: scroll;
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
   }
+
+
+  
+/* Custom styling for the Quill editor */
+.quill-container .ql-container {
+    border: none; /* Remove Quill's default border */
+}
+
+.quill-container .ql-toolbar {
+    border: none; /* Remove toolbar border */
+    border-bottom: 1px solid #d1d5db; /* Optional: add a bottom border to the toolbar */
+}

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Editor } from '@tinymce/tinymce-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Processing from '../../components/Processing';
 import Loader from '../../components/Loader';
 
@@ -24,10 +25,10 @@ const EditPost = () => {
         const fetchPostData = async () => {
             try {
                 const response = await axiosInstance.get(`/posts/${slug}`);
-                
+
                 const post = response.data.post;
                 setTitle(post.title);
-                setContent(post.content); // Set content for TinyMCE
+                setContent(post.content); // Set content for ReactQuill
                 setCategory(post.category_id);
                 setSubCategory(post.sub_category_id);
             } catch (error) {
@@ -72,8 +73,8 @@ const EditPost = () => {
         setImage(e.target.files[0]);
     };
 
-    const handleEditorChange = (content) => {
-        setContent(content);
+    const handleEditorChange = (value) => {
+        setContent(value);
     };
 
     const handleSubmit = async (e) => {
@@ -82,7 +83,7 @@ const EditPost = () => {
         const formData = new FormData();
         formData.append('_method', 'PUT');
         formData.append('title', title);
-        formData.append('content', content); // Use content from TinyMCE
+        formData.append('content', content); // Use content from ReactQuill
         if (image) {
             formData.append('image', image);
         }
@@ -126,23 +127,44 @@ const EditPost = () => {
                             {errors.title && <span className="text-red-500 text-sm mt-1">{errors.title[0]}</span>}
                         </div>
                         <div className="mb-4">
+
                             <label htmlFor="content" className="block text-gray-700 text-sm font-bold mb-2">Content</label>
-                            <Editor
-                                apiKey='umd1w4jjnwidj0f2hnqciepoog33gbugqf64ebnc3jjo4yoy'
-                                value={content}
-                                init={{
-                                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate  mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-                                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                    tinycomments_mode: 'embedded',
-                                    tinycomments_author: 'Author name',
-                                    mergetags_list: [
-                                      { value: 'First.Name', title: 'First Name' },
-                                      { value: 'Email', title: 'Email' },
-                                    ],
-                                    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                                  }}
-                                onEditorChange={handleEditorChange}
-                            />
+                            <div className='rounded-lg border-2 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline p-2'>
+                                <div className="quill-container"> {/* Custom wrapper */}
+                                    <ReactQuill
+                                        value={content}
+                                      
+                                        onChange={handleEditorChange}
+                                        className="max-h-96 min-h-64 overflow-x-auto  quill-editor"
+                                        modules={{
+                                            toolbar: [
+                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                                [{ size: [] }],
+                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                ['link',], // Image and video support
+                                                [{ 'color': [] }, { 'background': [] }], // Color picker
+
+                                                ['clean'], // Clean formatting tool
+                                            ],
+                                            history: {
+                                                delay: 1000,
+                                                maxStack: 50,
+                                                userOnly: true
+                                            }
+                                        }}
+                                        formats={[
+                                            'header', 'font', 'size',
+                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                            'list', 'bullet',
+                                            'link', // Image and video formats
+                                            'color', 'background', // Color and background formats
+
+                                        ]}
+                                    />
+
+                                </div>
+                            </div>
                             {errors.content && <span className="text-red-500 text-sm mt-1">{errors.content[0]}</span>}
                         </div>
                         <div className="mb-4">

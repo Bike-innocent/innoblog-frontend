@@ -1,15 +1,13 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { Editor } from '@tinymce/tinymce-react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Processing from '../components/Processing';
 
 const CreatePost = () => {
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState(''); // TinyMCE content state
+    const [content, setContent] = useState(''); // ReactQuill content state
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState('');
     const [subCategory, setSubCategory] = useState('');
@@ -65,8 +63,8 @@ const CreatePost = () => {
         setImage(e.target.files[0]);
     };
 
-    const handleEditorChange = (content, editor) => {
-        setContent(content);
+    const handleEditorChange = (value) => {
+        setContent(value);
     };
 
     const handleSubmit = async (e) => {
@@ -74,7 +72,7 @@ const CreatePost = () => {
         setProcessing(true);
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('content', content); // TinyMCE content
+        formData.append('content', content); // ReactQuill content
         formData.append('image', image);
         formData.append('category_id', category);
         formData.append('sub_category_id', subCategory);
@@ -103,7 +101,7 @@ const CreatePost = () => {
                     <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">Title</label>
                     <input
                         type="text"
-                        className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-blue-600 focus:outline-none focus:shadow-outline"
+                        className="appearance-none border-2 border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-600 focus:shadow-outline"
                         id="title"
                         name="title"
                         value={title}
@@ -112,24 +110,45 @@ const CreatePost = () => {
                     {errors.title && <span className="text-red-500 text-sm mt-1">{errors.title[0]}</span>}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="content" className="block text-gray-700 text-sm font-bold mb-2">Content</label>
-                    <Editor
-                       apiKey='umd1w4jjnwidj0f2hnqciepoog33gbugqf64ebnc3jjo4yoy' // optional, required for cloud-hosted version
-                        initialValue=""
-                        value={content}
-                        init={{
-                            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate  mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                            tinycomments_mode: 'embedded',
-                            tinycomments_author: 'Author name',
-                            mergetags_list: [
-                              { value: 'First.Name', title: 'First Name' },
-                              { value: 'Email', title: 'Email' },
-                            ],
-                            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-                          }}
-                        onEditorChange={handleEditorChange}
-                    />
+                    <label htmlFor="content" className="block text-gray-700  font-bold mb-2">Content</label>
+                    <div className="rounded-lg border-2 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline p-2">
+                        <div className="quill-container"> {/* Custom wrapper */}
+
+                            <ReactQuill
+                                value={content}
+                                placeholder="Write your content here..."
+                                onChange={handleEditorChange}
+                                className="max-h-96 min-h-64 overflow-x-auto quill-editor"
+                                modules={{
+                                    toolbar: [
+                                        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                        [{ size: [] }],
+                                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                        ['link',], // Image and video support
+                                        [{ 'color': [] }, { 'background': [] }], // Color picker
+
+                                        ['clean'], // Clean formatting tool
+                                    ],
+                                    history: {
+                                        delay: 1000,
+                                        maxStack: 50,
+                                        userOnly: true
+                                    }
+                                }}
+                                formats={[
+                                    'header', 'font', 'size',
+                                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                                    'list', 'bullet',
+                                    'link', // Image and video formats
+                                    'color', 'background', // Color and background formats
+
+                                ]}
+                            />
+
+
+                        </div>
+                    </div>
                     {errors.content && <span className="text-red-500 text-sm mt-1">{errors.content[0]}</span>}
                 </div>
                 <div className="mb-4">
@@ -139,7 +158,7 @@ const CreatePost = () => {
                         name="category"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-blue-600 focus:outline-none focus:shadow-outline"
+                        className="appearance-none border-2 border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-600 focus:shadow-outline"
                     >
                         {categories.length === 0 ? (
                             <option value="">No category found</option>
@@ -158,7 +177,7 @@ const CreatePost = () => {
                         name="subCategory"
                         value={subCategory}
                         onChange={(e) => setSubCategory(e.target.value)}
-                        className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-blue-600 focus:outline-none focus:shadow-outline"
+                        className="appearance-none border-2 border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-600 focus:shadow-outline"
                     >
                         {filteredSubCategories.length === 0 ? (
                             <option value="">No subcategory found</option>
@@ -174,7 +193,7 @@ const CreatePost = () => {
                     <label htmlFor="image" className="block text-gray-700 text-sm font-bold mb-2">Image</label>
                     <input
                         type="file"
-                        className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-blue-600 focus:outline-none focus:shadow-outline"
+                        className="appearance-none border-2 border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-600 focus:shadow-outline"
                         id="image"
                         name="image"
                         onChange={handleImageChange}
