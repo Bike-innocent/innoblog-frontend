@@ -129,42 +129,37 @@ const EditPost = () => {
                         <div className="mb-4">
 
                             <label htmlFor="content" className="block text-gray-700 text-sm font-bold mb-2">Content</label>
-                            <div className='rounded-lg border-2 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline p-2'>
-                                <div className="quill-container"> {/* Custom wrapper */}
+
+                            <div
+                                className="rounded-lg border-2 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline"
+                                onClick={(e) => {
+                                    e.preventDefault(); // Prevent any default behavior
+                                    setTimeout(() => {
+                                        document.querySelector('.quill-editor .ql-editor').focus(); // Ensure focus is set on the editable area
+                                    }, 0);
+                                }}
+                                tabIndex={0} // Makes the div focusable
+                            >
+                                <div className="quill-container focus-within:border-blue-600 focus-within:shadow-outline">
+                                    {/* Custom wrapper */}
                                     <ReactQuill
                                         value={content}
-                                      
+                                       
                                         onChange={handleEditorChange}
-                                        className="max-h-96 min-h-64 overflow-x-auto  quill-editor"
+                                        className="max-h-96 min-h-64 overflow-x-auto focus-within:border-blue-600 focus-within:shadow-outline quill-editor"
                                         modules={{
                                             toolbar: [
-                                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                                [{ size: [] }],
-                                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                                ['link',], // Image and video support
-                                                [{ 'color': [] }, { 'background': [] }], // Color picker
-
-                                                ['clean'], // Clean formatting tool
+                                                ['bold', 'italic', 'underline'], // Include only bold, italic, and underline
+                                                ['link'] // Include link
                                             ],
-                                            history: {
-                                                delay: 1000,
-                                                maxStack: 50,
-                                                userOnly: true
-                                            }
                                         }}
                                         formats={[
-                                            'header', 'font', 'size',
-                                            'bold', 'italic', 'underline', 'strike', 'blockquote',
-                                            'list', 'bullet',
-                                            'link', // Image and video formats
-                                            'color', 'background', // Color and background formats
-
+                                            'bold', 'italic', 'underline', 'link' // Enable only bold, italic, underline, and link
                                         ]}
                                     />
-
                                 </div>
                             </div>
+
                             {errors.content && <span className="text-red-500 text-sm mt-1">{errors.content[0]}</span>}
                         </div>
                         <div className="mb-4">

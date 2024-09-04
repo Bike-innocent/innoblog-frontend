@@ -73,7 +73,8 @@ const SinglePostHeaderSection = () => {
                     </div>
                 </div>
                 {/* Render post content as HTML */}
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div className="custom-quill-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+                            
 
                 {/* Pass both slug and post ID to CommentSection */}
                 <CommentSection slug={slug} postId={post.id} />

@@ -103,10 +103,20 @@ overflow: scroll;
   
 /* Custom styling for the Quill editor */
 .quill-container .ql-container {
-    border: none; /* Remove Quill's default border */
+    border: none; 
+    font-size: 16.5px;
+    margin: 0;/* Remove Quill's default border */
 }
 
 .quill-container .ql-toolbar {
     border: none; /* Remove toolbar border */
     border-bottom: 1px solid #d1d5db; /* Optional: add a bottom border to the toolbar */
 }
+
+
+
+.custom-quill-content a {
+    color: #0000EE; /* Default color for links */
+    text-decoration: underline; /* Default text-decoration for links */
+}
+
