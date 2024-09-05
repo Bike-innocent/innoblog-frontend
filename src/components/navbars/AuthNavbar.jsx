@@ -35,7 +35,11 @@ function AuthNavbar({ isSidebarOpen, toggleSidebar }) {
       console.log('Logout successful:', response.data);
 
       // Clear any auth-related items in localStorage if needed
-      localStorage.removeItem('auth_token');
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('title');
+      localStorage.removeItem('content');
+      localStorage.removeItem('category');
+      localStorage.removeItem('subCategory');
 
       // Redirect to the login page
       navigate('/login');

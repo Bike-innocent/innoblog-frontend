@@ -103,13 +103,16 @@ overflow: scroll;
   
 /* Custom styling for the Quill editor */
 .quill-container .ql-container {
-    border: none; 
+   height: 250px;
+   
+   border: none;
     font-size: 16.5px;
     margin: 0;/* Remove Quill's default border */
 }
 
 .quill-container .ql-toolbar {
-    border: none; /* Remove toolbar border */
+   /* Remove toolbar border */
+   border: none;
     border-bottom: 1px solid #d1d5db; /* Optional: add a bottom border to the toolbar */
 }
 

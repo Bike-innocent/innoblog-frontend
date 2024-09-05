@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 
 function Login() {
@@ -10,39 +10,42 @@ function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent page refresh
 
     try {
-      const response = await axiosInstance.post('/login', { email, password });
-      //console.log('Login successful:', response.data);
-      
-      // Save the auth token
-      localStorage.setItem('authToken', response.data.access_token);
-
-      // Clear errors
+      // Clear previous errors
       setErrors({});
       setGeneralError('');
+
+      const response = await axiosInstance.post('/login', { email, password });
+      console.log('Login successful:', response.data);
+
+      // Save the auth token
+      localStorage.setItem('authToken', response.data.access_token);
 
       // Redirect to the previous page or home if there's no previous page
       const previousPath = sessionStorage.getItem('previousPath') || '/';
       sessionStorage.removeItem('previousPath'); // Clean up the stored path
       navigate(previousPath);
-    } catch (error) {
-      console.error('Login error:', error); 
-      console.log('Error response:', error.response); 
 
-      if (error.response && error.response.data.errors) {
-        console.log('Validation errors:', error.response.data.errors); 
-        setErrors(error.response.data.errors);
-        setGeneralError('');
-      } else if (error.response && error.response.data.message) {
-        console.log('General error message:', error.response.data.message); 
-        setGeneralError(error.response.data.message);
-        setErrors({});
-      } else {
-        console.log('Unexpected error occurred');
-        setGeneralError('Login failed!');
-        setErrors({});
+    } catch (error) {
+      console.error('Login error:', error);
+
+      if (error.response) {
+        // Handle 401 for invalid credentials
+        if (error.response.status === 401 && error.response.data.message === 'Invalid credentials') {
+          setGeneralError('Invalid email or password.');
+        } else {
+          // Handle other errors
+          setGeneralError('An unexpected error occurred. Please try again.');
+        }
+
+        // Handle validation errors
+        if (error.response.data && error.response.data.errors) {
+          setErrors(error.response.data.errors);
+        } else {
+          setErrors({});
+        }
       }
     }
   };
@@ -74,7 +77,9 @@ function Login() {
           Login
         </button>
 
+        {/* Display general error if exists */}
         {generalError && <p className="text-red-600 mt-2">{generalError}</p>}
+
         <p className="mt-4">
           Don't have an account? <Link to="/register" className="text-blue-700">Register</Link>
         </p>

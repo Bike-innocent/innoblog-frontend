@@ -344,7 +344,11 @@ const CreatePost = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            localStorage.clear();  // Clear saved data on successful submit
+            localStorage.removeItem('title');
+            localStorage.removeItem('content');
+            localStorage.removeItem('category');
+            localStorage.removeItem('subCategory');
+           
             navigate('/profile', { state: { success: isPublish ? 'Post published successfully.' : 'Post saved as draft.' } });
         } catch (error) {
             if (error.response && error.response.data.errors) {
@@ -375,24 +379,7 @@ const CreatePost = () => {
                     <label htmlFor="content" className="block text-gray-700  font-bold mb-2">Content</label>
                     <div
                         className="rounded-lg border-2 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline"
-                        onClick={(e) => {
-                            const toolbarElement = document.querySelector('.ql-toolbar'); // Get the toolbar element
-                            const linkInput = document.querySelector('.ql-tooltip input[type="text"]'); // Get the link input field
-
-                            // Check if the click is inside the toolbar or the link input field
-                            if (
-                                (toolbarElement && toolbarElement.contains(e.target)) ||
-                                (linkInput && linkInput.contains(e.target))
-                            ) {
-                                // If the click is inside the toolbar or link input, don't focus the editor
-                                return;
-                            }
-
-                            setTimeout(() => {
-                                document.querySelector('.quill-editor .ql-editor').focus(); // Ensure focus is set on the editable area
-                            }, 0);
-                        }}
-                        tabIndex={0} // Makes the div focusable
+                       
                     >
                         <div className="quill-container focus-within:border-blue-600 focus-within:shadow-outline">
                             {/* Custom wrapper */}
@@ -400,7 +387,7 @@ const CreatePost = () => {
                                 value={content}
                                 placeholder="Write your content here..."
                                 onChange={handleEditorChange}
-                                className="max-h-96 min-h-64 overflow-x-auto focus-within:border-blue-600 focus-within:shadow-outline quill-editor"
+                                className="overflow-x-auto focus-within:border-blue-600 focus-within:shadow-outline quill-editor"
                                 modules={{
                                     toolbar: [
                                         ['bold', 'italic', 'underline'], // Include only bold, italic, and underline
