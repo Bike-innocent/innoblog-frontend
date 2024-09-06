@@ -74,15 +74,15 @@ function Login() {
         <p className="mt-4">
           <Link to="/forgot-password" className="text-blue-700">Forgot password?</Link>
         </p>
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600">
+        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 w-full">
           Login
         </button>
 
         {/* Display general error if exists */}
         {generalError && <p className="text-red-600 mt-2">{generalError}</p>}
-        <p>
+        <div  className='mt-4'>
           <GoogleAuthComponent />
-        </p>
+        </div>
 
         <p className="mt-4">
           Don't have an account? <Link to="/register" className="text-blue-700">Register</Link>

@@ -94,9 +94,9 @@ function Register() {
         </button>
         
         {errors.general && <p className="text-red-600 mt-2">{errors.general}</p>}
-        <p>
+        <div  className='mt-4'>
           <GoogleAuthComponent />
-        </p>
+        </div>
         
         <p className="mt-4">
           Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
