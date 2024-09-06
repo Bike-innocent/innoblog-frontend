@@ -59,6 +59,7 @@ const router = createBrowserRouter([
       { path: 'manage-category', element: <IndexCategory /> },
       { path: 'unauthorized', element: <Unauthorized /> },
       { path: '*', element: <NotFound /> }, // Handle 404 for undefined routes
+      { path: '/not-found', element: <NotFound /> }, // Handle 404 for undefined routes
     ],
   },
   {
