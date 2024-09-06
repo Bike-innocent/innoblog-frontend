@@ -3,8 +3,10 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { Tab } from '@headlessui/react';
 import { Skeleton } from '@nextui-org/react';
 import axiosInstance from '../../axiosInstance';
-import Published from './Published';
+
 import Draft from './Draft';
+
+import PublishedUsername from "./PublishedUsername";
 
 const fetchUserPosts = async ({ pageParam = 1, queryKey }) => {
   const [, username] = queryKey;
@@ -16,6 +18,7 @@ const fetchAuthUser = async () => {
   const response = await axiosInstance.get('/profile/user'); // Adjust the endpoint to your authentication user endpoint
   return response.data;
 };
+
 
 const MyPostUserName = ({ username }) => {
   const {
@@ -43,7 +46,6 @@ const MyPostUserName = ({ username }) => {
     queryFn: fetchAuthUser,
   });
 
-
   const observerRef = useRef();
 
   useEffect(() => {
@@ -69,6 +71,8 @@ const MyPostUserName = ({ username }) => {
     refetchPosts();
   };
 
+  const isAuthUser = authUserData?.username === username;
+
   if (isLoadingPosts || isLoadingAuthUser) {
     return (
       <section id="hero-slider">
@@ -79,7 +83,6 @@ const MyPostUserName = ({ username }) => {
                 <div className="block">
                   <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
-                   
                     <div className="flex flex-col w-full">
                       <Skeleton className="h-5 w-full rounded-lg" />
                       <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
@@ -106,8 +109,6 @@ const MyPostUserName = ({ username }) => {
   const publishedPosts = posts.filter(post => post.status === 1);
   const draftPosts = posts.filter(post => post.status === 0);
 
-  const authUser = authUserData;
-
   return (
     <section>
       <div className="container mx-auto my-4" data-aos="fade-in">
@@ -116,21 +117,21 @@ const MyPostUserName = ({ username }) => {
             <Tab
               className={({ selected }) =>
                 selected
-                  ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500'
+                  ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500 focus:outline-none'
                   : 'w-full py-2.5 text-sm leading-5 font-medium border-b-2'
               }
             >
               Published
             </Tab>
-            {authUser.username === username && (
+            {isAuthUser && (
               <Tab
                 className={({ selected }) =>
                   selected
-                    ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500'
+                    ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500 focus:outline-none'
                     : 'w-full py-2.5 text-sm leading-5 font-medium border-b-2'
                 }
               >
-                Draft
+                Draft / Unpublish
               </Tab>
             )}
           </Tab.List>
@@ -138,11 +139,11 @@ const MyPostUserName = ({ username }) => {
             <Tab.Panel>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
                 {publishedPosts.map((post) => (
-                  <Published key={post.slug} post={post} refreshPosts={refreshPosts} />
+                  <PublishedUsername key={post.slug} post={post} refreshPosts={refreshPosts} isAuthUser={isAuthUser} />
                 ))}
               </div>
             </Tab.Panel>
-            {authUser.username === username && (
+            {isAuthUser && (
               <Tab.Panel>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
                   {draftPosts.map((post) => (
@@ -161,7 +162,6 @@ const MyPostUserName = ({ username }) => {
                 <div className="block">
                   <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
-                    
                     <div className="flex flex-col w-full">
                       <Skeleton className="h-5 w-full rounded-lg" />
                       <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
@@ -178,3 +178,4 @@ const MyPostUserName = ({ username }) => {
 };
 
 export default MyPostUserName;
+

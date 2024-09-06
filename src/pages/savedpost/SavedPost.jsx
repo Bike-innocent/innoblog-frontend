@@ -14,7 +14,15 @@ const fetchSavedPosts = async ({ pageParam = 1 }) => {
   }
 };
 
+
+
+
 const SavedPost = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
+  
+  
   const {
     data,
     fetchNextPage,

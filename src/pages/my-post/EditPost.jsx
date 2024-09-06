@@ -196,7 +196,7 @@ const EditPost = () => {
                             {errors.sub_category_id && <span className="text-red-500 text-sm mt-1">{errors.sub_category_id[0]}</span>}
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="image" className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                            <label htmlFor="image" className="block text-gray-700 text-sm font-bold mb-2">Thumbnail</label>
                             <input
                                 type="file"
                                 className="appearance-none border-2 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:border-blue-600 focus:outline-none focus:shadow-outline"

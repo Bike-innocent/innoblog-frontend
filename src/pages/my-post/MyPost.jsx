@@ -93,7 +93,7 @@ const MyPost = () => {
             <Tab
             className={({ selected }) =>
                 selected
-                  ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500'
+                  ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500 focus:outline-none'
                   : 'w-full py-2.5 text-sm leading-5 font-medium border-b-2'
               }
             >
@@ -102,11 +102,11 @@ const MyPost = () => {
             <Tab
              className={({ selected }) =>
                 selected
-                  ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500'
+                  ? 'w-full py-2.5 text-sm leading-5 font-medium border-b-2 border-blue-500 focus:outline-none'
                   : 'w-full py-2.5 text-sm leading-5 font-medium border-b-2'
               }
             >
-              Draft
+              Draft / Unpublish
             </Tab>
           </Tab.List>
           <Tab.Panels className="mt-2">

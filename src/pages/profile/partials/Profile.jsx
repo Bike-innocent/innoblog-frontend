@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axiosInstance from '../../../axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '@nextui-org/react';
@@ -12,6 +12,11 @@ const fetchUserProfile = async () => {
 };
 
 const Profile = () => {
+  // Scroll to the top when the component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top-left corner
+  }, []);
+
   const { data: user, isLoading, isError, error } = useQuery({
     queryKey: ['profile2'],
     queryFn: fetchUserProfile,
@@ -19,40 +24,38 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-        <section id="hero-slider">
+      <section id="hero-slider">
         <div className="mx-auto flex flex-row">
-            <div className="bg-gray-200  pr-4 rounded-full w-32 h-32 mt-5">
-                <Skeleton height="100px" width="70%" className="mb-4" />
+          <div className="bg-gray-200  pr-4 rounded-full w-32 h-32 mt-5">
+            <Skeleton height="100px" width="70%" className="mb-4" />
+          </div>
+          <div className="w-2/5 mt-2">
+            <div className="bg-gray-200 rounded-lg  ml-3 pl-4 h-8  mt-5">
+              <Skeleton height="100px" width="70%" className="mb-4" />
             </div>
-            <div className="w-2/5 mt-2">
-
-                <div className="bg-gray-200 rounded-lg  ml-3 pl-4 h-8  mt-5">
-                    <Skeleton height="100px" width="70%" className="mb-4" />
-                </div>
-                <div className="bg-gray-200 rounded-lg  ml-3 pl-4 h-8 mt-5">
-                    <Skeleton height="100px" width="70%" className="mb-4" />
-                </div>
+            <div className="bg-gray-200 rounded-lg  ml-3 pl-4 h-8 mt-5">
+              <Skeleton height="100px" width="70%" className="mb-4" />
             </div>
+          </div>
         </div>
         <div className="container mx-auto my-4" data-aos="fade-in">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((_, index) => (
-                    <div key={index} className="w-full group">
-                        <div className="block">
-                            <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
-                            <div className="flex pt-2">
-                                
-                                <div className="flex flex-col w-full">
-                                    <Skeleton className="h-5 w-full rounded-lg" />
-                                    <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
-                                </div>
-                            </div>
-                        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3, 4, 5, 6].map((_, index) => (
+              <div key={index} className="w-full group">
+                <div className="block">
+                  <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
+                  <div className="flex pt-2">
+                    <div className="flex flex-col w-full">
+                      <Skeleton className="h-5 w-full rounded-lg" />
+                      <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
                     </div>
-                ))}
-            </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-    </section>
+      </section>
     );
   }
 
@@ -75,7 +78,7 @@ const Profile = () => {
           <Link to={`/profile/edit`} className='text-blue-500 mt-2'>edit</Link>
         </div>
       </div>
-      <MyPost/>
+      <MyPost />
     </div>
   );
 };

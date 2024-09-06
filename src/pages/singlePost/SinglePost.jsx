@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SinglePostHeaderSection from './singlePostComponent/SinglePostHeaderSection';
 import SinglePostTabs from './singlePostComponent/SinglePostTabs';
 
 function SinglePost() {
+  // Scroll to the top when the component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
+
   return (
     <div className="container mx-auto flex flex-col lg:flex-row">
       <div className="lg:w-3/4">

@@ -9,7 +9,12 @@ const fetchAllPosts = async ({ pageParam = 1 }) => {
   return response.data;
 };
 
+
 const AllPosts = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
+  
   const {
     data,
     fetchNextPage,

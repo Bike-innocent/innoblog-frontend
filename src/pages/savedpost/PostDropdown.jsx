@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react'; 
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react';
 import { BsThreeDotsVertical, BsBookmarkFill, BsShare } from 'react-icons/bs';
 import axiosInstance from '../../axiosInstance'; // Ensure axiosInstance is correctly set up
+import Share from './Share';
 
 const PostDropdown = ({ post, onRemove }) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
+
   const handleRemoveFromSave = async () => {
     try {
       const response = await axiosInstance.delete(`posts/${post.slug}/remove-save`);
@@ -18,11 +21,16 @@ const PostDropdown = ({ post, onRemove }) => {
   };
 
   const handleShare = () => {
-    console.log('Share post:', post.slug);
-    // Add your share logic here
+    setIsShareOpen(true);
   };
 
+  const closeShareModal = () => {
+    setIsShareOpen(false);
+  };
+
+
   return (
+    <>
     <Dropdown>
       <DropdownTrigger>
         <button className="text-gray-500 hover:text-gray-700">
@@ -42,6 +50,8 @@ const PostDropdown = ({ post, onRemove }) => {
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
+     <Share isOpen={isShareOpen} onClose={closeShareModal} postUrl={`https://innoblog.com.ng/posts/${post.slug}`} />
+     </>
   );
 };
 

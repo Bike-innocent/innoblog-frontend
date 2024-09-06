@@ -78,17 +78,7 @@ function MainLayout() {
                             >
                                 <AiOutlineHome className="mr-2" size={20} /> Home
                             </NavLink>
-                            <NavLink
-                                to="/dashboard"
-                                onClick={toggleSidebar}
-                                className={({ isActive }) =>
-                                    isActive
-                                        ? 'flex items-center px-4 py-2 bg-blue-500 text-white'
-                                        : 'flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white'
-                                }
-                            >
-                                <AiOutlineHome className="mr-2" size={20} /> Dashboard
-                            </NavLink>
+                          
                             <NavLink
                                 to="/profile"
 
@@ -122,7 +112,7 @@ function MainLayout() {
                                         : 'flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-white'
                                 }
                             >
-                                <BsPencilSquare className="mr-2" size={20} /> Saved
+                                <BsPencilSquare className="mr-2" size={20} /> Saved Posts
                             </NavLink>
                             {user && user.roles && user.roles.some((role) => role.name === 'admin') && (
                                 <>

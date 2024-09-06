@@ -58,7 +58,7 @@ const PostDropdown = ({ post, setSuccessMessage }) => {
     <>
       <Dropdown>
         <DropdownTrigger>
-          <button className="text-gray-500 hover:text-gray-700">
+          <button className="text-gray-500 hover:text-gray-700 z-0">
             <BsThreeDotsVertical size={24} />
           </button>
         </DropdownTrigger>

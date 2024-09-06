@@ -18,7 +18,7 @@ function Login() {
       setGeneralError('');
 
       const response = await axiosInstance.post('/login', { email, password });
-      console.log('Login successful:', response.data);
+     // console.log('Login successful:', response.data);
 
       // Save the auth token
       localStorage.setItem('authToken', response.data.access_token);

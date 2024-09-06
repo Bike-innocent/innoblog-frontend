@@ -1,9 +1,11 @@
+
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PlaceholderImage from './PlaceholderImage';
-import PostDropdown from './PostDropdown';
 
-const Post = ({ post, isSaved, onRemove }) => {
+
+import PostActionsUsername from './postActionsUsername';
+const PublishedUsername = ({ post, refreshPosts, isAuthUser }) => {
   return (
     <div className="w-full group">
       <div className="relative">
@@ -15,27 +17,24 @@ const Post = ({ post, isSaved, onRemove }) => {
           />
         </Link>
         <div className="flex pt-2">
-          <Link to={`/${post.user.username}`} className="w-14">
-            <PlaceholderImage
-              name={post.user.name}
-              avatar={post.user.avatar_url}
-              placeholderColor={post.user.placeholder_color}
-            />
-          </Link>
-          
-          <div className="flex-1 flex items-center justify-between">
+          <div className="flex-1 flex justify-between">
             <Link to={`/posts/${post.slug}`} className="flex-1">
               <h2 className="text-xl font-semibold m-0 p-0 group-hover:underline">
                 {post.title.length > 40 ? post.title.substring(0, 40) + '...' : post.title}
               </h2>
             </Link>
-            <PostDropdown post={post} isSaved={isSaved} onRemove={onRemove} /> {/* Pass onRemove to PostDropdown */}
+            <PostActionsUsername
+              postSlug={post.slug}
+              isPublished={post.status === 1}
+              refreshPosts={refreshPosts}
+            
+              isAuthUser={isAuthUser} // Use this prop to show extra actions if user owns the post
+            />
           </div>
         </div>
-        <p className="text-gray-500">{post.user.name}</p>
       </div>
     </div>
   );
 };
 
-export default Post;
+export default PublishedUsername;

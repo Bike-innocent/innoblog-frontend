@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Button, Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from "@nextui-org/react";
-import { Dialog } from '@headlessui/react';
+import { BsShare } from 'react-icons/bs';
+import { FiEdit } from 'react-icons/fi';
+import { FaTrash } from 'react-icons/fa';
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
+import { Dialog, Transition } from '@headlessui/react';
 import axiosInstance from '../../axiosInstance';
 import { Link } from 'react-router-dom';
 import { VerticalDotsIcon } from "../VerticalDotsIcons";
+import Share from './Share';
 
-const PostActions = ({ postSlug, isPublished, refreshPosts }) => {
+const PostActions = ({ postSlug, isPublished, refreshPosts, showShareOption }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isPublishedState, setIsPublishedState] = useState(isPublished);
+  const [isShareOpen, setIsShareOpen] = useState(false);
+
+  const handleShare = () => {
+    setIsShareOpen(true);
+  };
+
+  const closeShareModal = () => {
+    setIsShareOpen(false);
+  };
 
   const handleDelete = () => {
     axiosInstance.delete(`/posts/${postSlug}`)
@@ -37,6 +51,10 @@ const PostActions = ({ postSlug, isPublished, refreshPosts }) => {
     setIsDialogOpen(true);
   };
 
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
     <>
       <Dropdown>
@@ -46,48 +64,104 @@ const PostActions = ({ postSlug, isPublished, refreshPosts }) => {
           </Button>
         </DropdownTrigger>
         <DropdownMenu>
+          {showShareOption && (
+            <DropdownItem key="share" onClick={handleShare}>
+              <div className="flex items-center">
+                <BsShare className="mr-2" /> Share
+              </div>
+            </DropdownItem>
+          )}
           <DropdownItem>
-            <Link to={`/view-post/${postSlug}`} className="block">View</Link>
+            <Link to={`/edit-post/${postSlug}`} className="block">
+              <div className="flex items-center">
+                <FiEdit className="mr-2" /> Edit
+              </div>
+            </Link>
           </DropdownItem>
-          <DropdownItem>
-            <Link to={`/edit-post/${postSlug}`} className="block">Edit</Link>
+          <DropdownItem onClick={openDeleteDialog}>
+            <div className="flex items-center">
+              <FaTrash className="mr-2" /> Delete
+            </div>
           </DropdownItem>
-          <DropdownItem onClick={openDeleteDialog}>Delete</DropdownItem>
           <DropdownItem onClick={handlePublishToggle}>
-            {isPublishedState ? "Unpublish" : "Publish"}
+            <div className="flex items-center">
+              {isPublishedState ? (
+                <>
+                  <AiOutlineCloseCircle className="mr-2" /> Unpublish
+                </>
+              ) : (
+                <>
+                  <AiOutlineCheckCircle className="mr-2" /> Publish
+                </>
+              )}
+            </div>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} className="fixed z-10 inset-0 overflow-y-auto">
-        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-          </div>
+      {/* Share Modal */}
+      <Share isOpen={isShareOpen} onClose={closeShareModal} postUrl={`https://innoblog.com.ng/posts/${postSlug}`} />
 
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      {/* Delete Confirmation Dialog */}
+      <Transition appear show={isDialogOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeDialog}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
 
-          <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-            <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-              Confirm Delete
-            </Dialog.Title>
-            <div className="mt-2">
-              <p className="text-sm ">
-                Are you sure you want to delete this post?
-              </p>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                  <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                    Delete Post
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      Are you sure you want to delete this post? This action cannot be undone.
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <Button
+                      auto
+                      flat
+                      color="error"
+                      onClick={handleDelete}
+                      className="mr-2 bg-red-600 text-white"
+                    >
+                      Yes, Delete
+                    </Button>
+                    <Button
+                      auto
+                      onClick={closeDialog}
+                      className="bg-gray-200 text-gray-700"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
-
-            <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-              <Button auto flat color="error" onClick={() => setIsDialogOpen(false)} className="sm:ml-3 sm:w-auto sm:text-sm">
-                Cancel
-              </Button>
-              <Button auto onClick={handleDelete} className="mt-3 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm text-white bg-red-500">
-                Delete
-              </Button>
-            </div>
           </div>
-        </div>
-      </Dialog>
+        </Dialog>
+      </Transition>
     </>
   );
 };

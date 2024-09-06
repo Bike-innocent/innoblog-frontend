@@ -66,7 +66,7 @@ export default function UpdateProfileInformation({ className = '' }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
-                <p className="mt-1 text-sm text-gray-600">Update your account's profile information and email address.</p>
+                <p className="mt-1 text-sm text-gray-600">Update your account's profile information </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
@@ -99,7 +99,7 @@ export default function UpdateProfileInformation({ className = '' }) {
                     {errors.username && <p className="mt-2 text-sm text-red-600">{errors.username}</p>}
                 </div>
 
-                <p className="text-sm text-gray-600">URL: http://innoblog.com/@{data.username}</p>
+                {/* <p className="text-sm text-gray-600">URL: https://innoblog.com.ng/@{data.username}</p> */}
 
                 <div className="flex items-center gap-4">
                     <button
