@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import GoogleAuthComponent from './GoogleAuthComponent';
 
 function Register() {
   const [name, setName] = useState('');
@@ -93,6 +94,9 @@ function Register() {
         </button>
         
         {errors.general && <p className="text-red-600 mt-2">{errors.general}</p>}
+        <p>
+          <GoogleAuthComponent />
+        </p>
         
         <p className="mt-4">
           Already have an account? <Link to="/login" className="text-blue-700">Login</Link>

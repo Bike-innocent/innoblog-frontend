@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import GoogleAuthComponent from './GoogleAuthComponent';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ function Login() {
       setGeneralError('');
 
       const response = await axiosInstance.post('/login', { email, password });
-     // console.log('Login successful:', response.data);
+      // console.log('Login successful:', response.data);
 
       // Save the auth token
       localStorage.setItem('authToken', response.data.access_token);
@@ -79,6 +80,9 @@ function Login() {
 
         {/* Display general error if exists */}
         {generalError && <p className="text-red-600 mt-2">{generalError}</p>}
+        <p>
+          <GoogleAuthComponent />
+        </p>
 
         <p className="mt-4">
           Don't have an account? <Link to="/register" className="text-blue-700">Register</Link>

@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
       const xsrfTokenExists = document.cookie.includes('XSRF-TOKEN');
 
       if (!xsrfTokenExists) {
-    // await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+   //await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
             await axios.get('https://backend.innoblog.com.ng/sanctum/csrf-cookie', {
           withCredentials: true,
         });
