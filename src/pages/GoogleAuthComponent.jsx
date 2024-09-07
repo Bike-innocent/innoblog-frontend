@@ -37,22 +37,27 @@
 //     );
 // };
 
+
+
 // export default GoogleAuthComponent;
 
-import React from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 const GoogleAuthComponent = () => {
-
+    const navigate = useNavigate(); // For client-side navigation after login if needed
 
     const handleGoogleLogin = () => {
-        // Redirect to Laravel backend for Google OAuth
+        // Redirect to the Laravel backend for Google OAuth
         window.location.href = `https://backend.innoblog.com.ng/auth/google/redirect`;
     };
 
     return (
-        <button onClick={handleGoogleLogin}>
-            Login with Google
-        </button>
+        <div>
+            <button onClick={handleGoogleLogin}>
+                Login with Google
+            </button>
+        </div>
     );
 };
 
