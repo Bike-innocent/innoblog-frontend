@@ -32,6 +32,8 @@ import EditProfile from './pages/profile/partials/EditProfile';
 import SavedPost from './pages/savedpost/SavedPost';
 import Reports from './pages/reports/Reports';
 import SearchResults from './pages/search-result/SearchResults';
+import TermsOfService from './pages/TermsOfService';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const router = createBrowserRouter([
   {
@@ -53,7 +55,8 @@ const router = createBrowserRouter([
       { path: 'reports', element: <Reports /> },
       { path: 'all-users', element: <AllUsers /> },
       { path: 'settings', element: <Settings /> },
-
+      
+      
       { path: 'edit-post/:slug', element: <EditPost /> },
       { path: 'view-post/:slug', element: <ViewPost /> },
       { path: 'manage-category', element: <IndexCategory /> },
@@ -70,6 +73,8 @@ const router = createBrowserRouter([
       { path: 'login', element: <Login /> },
       { path: 'forgot-password', element: <ForgotPassword /> },
       { path: 'reset-password', element: <ResetPassword /> },
+      { path: 'privacy-policy', element: <PrivacyPolicy /> },
+      { path: 'terms-of-service', element: <TermsOfService /> },
     ],
   },
 ]);
