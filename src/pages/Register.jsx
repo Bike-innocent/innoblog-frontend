@@ -97,7 +97,7 @@ function Register() {
       </form>
 
       <div className="mt-4">
-      <GoogleAuthComponent text="Register with Google" />
+      <GoogleAuthComponent text="Continue with Google" />
       </div>
       <p className="mt-4">
         Already have an account? <Link to="/login" className="text-blue-700">Login</Link>

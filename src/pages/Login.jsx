@@ -183,7 +183,7 @@ function Login() {
 
      
       <div className="mt-4">
-      <GoogleAuthComponent text="Login with Google" />
+      <GoogleAuthComponent text="Continue with Google" />
       </div>
 
       <p className="mt-4">
