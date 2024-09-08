@@ -47,7 +47,7 @@ function Register() {
 
   return (
     <div className="max-w-md mx-auto mt-3">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
+      <h1 className="text-2xl font-bold mb-4">Innoblog</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -57,7 +57,7 @@ function Register() {
           className="border p-2 w-full"
         />
         {errors.name && <p className="text-red-600">{errors.name[0]}</p>}
-        
+
         <input
           type="email"
           value={email}
@@ -66,7 +66,7 @@ function Register() {
           className="border p-2 w-full mt-2"
         />
         {errors.email && <p className="text-red-600">{errors.email[0]}</p>}
-        
+
         <input
           type="password"
           value={password}
@@ -77,7 +77,7 @@ function Register() {
         {errors.password && !errors.password.includes("Passwords do not match") && (
           <p className="text-red-600">{errors.password[0]}</p>
         )}
-        
+
         <input
           type="password"
           value={confirmPassword}
@@ -92,16 +92,16 @@ function Register() {
         <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 w-full">
           Register
         </button>
-        
+
         {errors.general && <p className="text-red-600 mt-2">{errors.general}</p>}
-        <div  className='mt-4'>
-          <GoogleAuthComponent />
-        </div>
-        
-        <p className="mt-4">
-          Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
-        </p>
       </form>
+
+      <div className="mt-4">
+      <GoogleAuthComponent text="Register with Google" />
+      </div>
+      <p className="mt-4">
+        Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
+      </p>
     </div>
   );
 }

@@ -66,7 +66,7 @@ function MainLayout() {
                 >
 
                     <div className="flex flex-col flex-1  overflow-y-auto">
-                        <nav className="flex-1  space-y-2 mt-3">
+                        <nav className="flex-1  space-y-2 ">
                             <NavLink
                                 to="/"
                                 onClick={toggleSidebar}
