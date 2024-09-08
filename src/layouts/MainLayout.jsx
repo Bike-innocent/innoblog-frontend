@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai';
 import { BsPencilSquare, BsJournalText, BsPeople, BsGear, BsBoxArrowRight } from 'react-icons/bs';
 import AuthNavbar from '../components/navbars/AuthNavbar';
 import Footer from '../components/Footer';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 
 import axiosInstance from '../axiosInstance';
 
@@ -19,39 +19,53 @@ function MainLayout() {
     const navigate = useNavigate();
 
     const { data: user, isLoading, error } = useQuery({
-        queryKey: ['user'],
+        queryKey: ['usedfbr'],
         queryFn: fetchUser,
     });
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
-   
+
 
     const handleLogout = async () => {
         try {
-            const response = await axiosInstance.post('/logout');
-            console.log('Logout successful:', response.data);
-
-            // Clear any auth-related items in localStorage if needed
+            // Clear token before the request
             localStorage.removeItem('authToken');
             localStorage.removeItem('title');
             localStorage.removeItem('content');
             localStorage.removeItem('category');
             localStorage.removeItem('subCategory');
-
+    
+            // Post logout request to backend
+            const response = await axiosInstance.post('/logout');
+            console.log('Logout successful:', response.data);
+    
             // Redirect to the login page
             navigate('/login');
         } catch (error) {
             console.error('Error logging out:', error);
         }
     };
+    
 
-      
-    
-    
-    
-    
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const token = queryParams.get('token');
+
+        if (token) {
+            // Store the token in localStorage
+            localStorage.setItem('authToken', token);
+
+            // Remove the token from the URL to clean up the address bar
+            window.history.replaceState({}, document.title, window.location.pathname);
+
+            // Redirect to the dashboard
+            navigate('/');
+        }
+    }, [navigate]);
+
 
     return (
         <>
@@ -62,7 +76,7 @@ function MainLayout() {
             <div className="flex bg-gray-100 mt-16 ">
                 <div
                     className={`fixed  inset-y-0 left-0 top-16 z-50 min-w-64 bg-gray-900 shadow-lg transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-                     } transition-transform duration-300 ease-in-out xl:sticky   xl:h-screen xl:translate-x-0 xl:flex xl:flex-col xl:w-1/5`}
+                        } transition-transform duration-300 ease-in-out xl:sticky   xl:h-screen xl:translate-x-0 xl:flex xl:flex-col xl:w-1/5`}
                 >
 
                     <div className="flex flex-col flex-1  overflow-y-auto">
@@ -78,7 +92,7 @@ function MainLayout() {
                             >
                                 <AiOutlineHome className="mr-2" size={20} /> Home
                             </NavLink>
-                          
+
                             <NavLink
                                 to="/profile"
 

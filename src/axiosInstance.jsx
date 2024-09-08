@@ -43,6 +43,34 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// axiosInstance.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response) {
+//       const currentPath = window.location.pathname;
+
+//       if (error.response.status === 401) {
+//         const errorMessage = error.response.data.message;
+        
+//         // If the message is "Invalid credentials", don't redirect, let the component handle it
+//         if (errorMessage !== 'Invalid credentials') {
+//           // Save the current path before redirecting to login (except login/register pages)
+//           if (currentPath !== '/login' && currentPath !== '/register') {
+//             sessionStorage.setItem('previousPath', currentPath);
+//           }
+//           window.location.href = '/login';
+//         }
+//       } else if (error.response.status === 404) {
+//         window.location.href = '/not-found';
+//       }
+//     } else {
+//       console.error('Unexpected error:', error);
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
+// export default axiosInstance;
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -51,13 +79,11 @@ axiosInstance.interceptors.response.use(
 
       if (error.response.status === 401) {
         const errorMessage = error.response.data.message;
-        
-        // If the message is "Invalid credentials", don't redirect, let the component handle it
-        if (errorMessage !== 'Invalid credentials') {
-          // Save the current path before redirecting to login (except login/register pages)
-          if (currentPath !== '/login' && currentPath !== '/register') {
-            sessionStorage.setItem('previousPath', currentPath);
-          }
+
+        // Only redirect if not on the login/register pages
+        if (errorMessage !== 'Invalid credentials' && currentPath !== '/login' && currentPath !== '/register') {
+          // Save the current path before redirecting to login
+          sessionStorage.setItem('previousPath', currentPath);
           window.location.href = '/login';
         }
       } else if (error.response.status === 404) {
@@ -69,5 +95,3 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default axiosInstance;
