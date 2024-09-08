@@ -1,6 +1,98 @@
 
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import React from 'react';
+// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// import Register from './pages/Register';
+// import Login from './pages/Login';
+// import ForgotPassword from './pages/ForgotPassword';
+// import ResetPassword from './pages/ResetPassword';
+// import GuestLayout from './layouts/GuestLayout';
+// import MainLayout from './layouts/MainLayout';
+
+// import CreatePost from './pages/CreatePost';
+// import AllPosts from './pages/all-posts/AllPosts';
+// import AllUsers from './pages/AllUsers';
+// import Settings from './pages/Settings';
+
+// import Unauthorized from './pages/Unauthorized';
+// import NotFound from './pages/NotFound';
+
+// import Index from './pages/home/Index';
+
+// import SinglePost from './pages/singlePost/SinglePost';
+// import IndexCategory from './pages/categories/IndexCategory';
+// import EditPost from './pages/my-post/EditPost';
+// import ViewPost from './pages/ViewPost';
+
+// import Dashboard from './pages/Dasboard';
+// import Profile from './pages/profile/partials/Profile';
+// import ProfileUserName from './pages/profile/profileUserName/ProfileUserName';
+// import EditProfile from './pages/profile/partials/EditProfile';
+// import SavedPost from './pages/savedpost/SavedPost';
+// import Reports from './pages/reports/Reports';
+// import SearchResults from './pages/search-result/SearchResults';
+// import TermsOfService from './pages/TermsOfService';
+// import PrivacyPolicy from './pages/PrivacyPolicy';
+
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <MainLayout />,
+//     children: [
+//       { path: '/', element: <Index /> }, // Root path displays the Index component
+//       { path: 'dashboard', element: <Dashboard /> },
+//       { path: 'search', element: <SearchResults /> },
+
+//       { path: 'home', element: <Index /> },
+//       { path: 'posts/:slug', element: <SinglePost /> },
+//       { path: 'profile', element: <Profile /> },
+//       { path: 'profile/edit', element: <EditProfile /> },
+//       { path: '/:username', element: <ProfileUserName /> },
+//       { path: 'create-post', element: <CreatePost /> },
+//       { path: 'saved', element: <SavedPost /> },
+//       { path: 'all-posts', element: <AllPosts /> },
+//       { path: 'reports', element: <Reports /> },
+//       { path: 'all-users', element: <AllUsers /> },
+//       { path: 'settings', element: <Settings /> },
+      
+      
+//       { path: 'edit-post/:slug', element: <EditPost /> },
+//       { path: 'view-post/:slug', element: <ViewPost /> },
+//       { path: 'manage-category', element: <IndexCategory /> },
+//       { path: 'unauthorized', element: <Unauthorized /> },
+//       { path: '*', element: <NotFound /> }, // Handle 404 for undefined routes
+//       { path: '/not-found', element: <NotFound /> }, // Handle 404 for undefined routes
+//     ],
+//   },
+//   {
+//     path: '/',
+//     element: <GuestLayout />,
+//     children: [
+//       { path: 'register', element: <Register /> },
+//       { path: 'login', element: <Login /> },
+//       { path: 'forgot-password', element: <ForgotPassword /> },
+//       { path: 'reset-password', element: <ResetPassword /> },
+//       { path: 'privacy-policy', element: <PrivacyPolicy /> },
+//       { path: 'terms-of-service', element: <TermsOfService /> },
+//     ],
+//   },
+// ]);
+
+// const queryClient = new QueryClient();
+
+// function App() {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <RouterProvider router={router} />
+//     </QueryClientProvider>
+//   );
+// }
+
+// export default App;
+
+import React, { useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Register from './pages/Register';
@@ -14,17 +106,13 @@ import CreatePost from './pages/CreatePost';
 import AllPosts from './pages/all-posts/AllPosts';
 import AllUsers from './pages/AllUsers';
 import Settings from './pages/Settings';
-
 import Unauthorized from './pages/Unauthorized';
 import NotFound from './pages/NotFound';
-
 import Index from './pages/home/Index';
-
 import SinglePost from './pages/singlePost/SinglePost';
 import IndexCategory from './pages/categories/IndexCategory';
 import EditPost from './pages/my-post/EditPost';
 import ViewPost from './pages/ViewPost';
-
 import Dashboard from './pages/Dasboard';
 import Profile from './pages/profile/partials/Profile';
 import ProfileUserName from './pages/profile/profileUserName/ProfileUserName';
@@ -35,15 +123,15 @@ import SearchResults from './pages/search-result/SearchResults';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 
+// Router configuration
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: '/', element: <Index /> }, // Root path displays the Index component
+      { path: '/', element: <Index /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'search', element: <SearchResults /> },
-
       { path: 'home', element: <Index /> },
       { path: 'posts/:slug', element: <SinglePost /> },
       { path: 'profile', element: <Profile /> },
@@ -55,14 +143,12 @@ const router = createBrowserRouter([
       { path: 'reports', element: <Reports /> },
       { path: 'all-users', element: <AllUsers /> },
       { path: 'settings', element: <Settings /> },
-      
-      
       { path: 'edit-post/:slug', element: <EditPost /> },
       { path: 'view-post/:slug', element: <ViewPost /> },
       { path: 'manage-category', element: <IndexCategory /> },
       { path: 'unauthorized', element: <Unauthorized /> },
-      { path: '*', element: <NotFound /> }, // Handle 404 for undefined routes
-      { path: '/not-found', element: <NotFound /> }, // Handle 404 for undefined routes
+      { path: '*', element: <NotFound /> },
+      { path: '/not-found', element: <NotFound /> },
     ],
   },
   {
@@ -82,6 +168,25 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient();
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check for token in the URL
+    const queryParams = new URLSearchParams(window.location.search);
+    const token = queryParams.get('token');
+
+    if (token) {
+      // Store the token in localStorage
+      localStorage.setItem('authToken', token);
+
+      // Remove the token from the URL to clean up the address bar
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      // Redirect to a secure page, e.g., dashboard
+      navigate('/');
+    }
+  }, [navigate]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
@@ -90,4 +195,3 @@ function App() {
 }
 
 export default App;
-
