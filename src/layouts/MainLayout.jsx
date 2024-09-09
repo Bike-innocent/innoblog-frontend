@@ -5,23 +5,20 @@ import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai';
 import { BsPencilSquare, BsJournalText, BsPeople, BsGear, BsBoxArrowRight } from 'react-icons/bs';
 import AuthNavbar from '../components/navbars/AuthNavbar';
 import Footer from '../components/Footer';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import axiosInstance from '../axiosInstance';
 
 
-function fetchUser() {
-    return axiosInstance.get('/profile/user').then((response) => response.data);
-}
+
 
 function MainLayout() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
 
-    const { data: user, isLoading, error } = useQuery({
-        queryKey: ['usedfbr'],
-        queryFn: fetchUser,
-    });
+    const { data: user } = useQuery({
+        queryKey: ['AuthUserData'], // Must match the query key used in DataProviders
+      });
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
