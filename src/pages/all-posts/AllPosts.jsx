@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Skeleton } from '@nextui-org/react';
 import axiosInstance from '../../axiosInstance';
 import Post from './Post';
+import Title from '../../components/Title';
 
 const fetchAllPosts = async ({ pageParam = 1 }) => {
   const response = await axiosInstance.get(`/blog/posts?page=${pageParam}&limit=12`);
@@ -91,6 +92,7 @@ const AllPosts = () => {
   return (
     <section>
       <div className="container mx-auto my-4" data-aos="fade-in">
+      <Title title={`All Posts`} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
           {posts.map((post, index) => (
             <Post key={index} post={post} refreshPosts={refreshPosts}  />

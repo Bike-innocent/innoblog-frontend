@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CategoryTab from './index/CategoryTab';
 import SubcategoryTab from './index/SubcategoryTab';
+import Title from '../../components/Title'; // Import the Title component
 
 function Index() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -13,11 +14,13 @@ function Index() {
 
     return (
         <div className="mx-auto container">
+            {/* Set the page title for the home page */}
+            <Title title="Home" />
+            
             <CategoryTab onSelectCategory={handleSelectCategory} />
             <div className='mt-4'>
-            <SubcategoryTab selectedCategory={selectedCategory} subcategories={subcategories} />
+                <SubcategoryTab selectedCategory={selectedCategory} subcategories={subcategories} />
             </div>
-           
         </div>
     );
 }

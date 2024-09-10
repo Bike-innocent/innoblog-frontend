@@ -2,11 +2,13 @@ import React from 'react';
 import { Tab } from '@headlessui/react';
 import Categories from './Categories';
 import SubCategories from './SubCategories';
+import Title from '../../components/Title';
 // import Tags from './Tags';
 
 function IndexCategory() {
   return (
     <div className="w-full  px-2 py-16 sm:px-0">
+       <Title title={`Categories`} />
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
           <Tab as={React.Fragment}>

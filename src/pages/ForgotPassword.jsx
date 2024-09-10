@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axiosInstance from '../axiosInstance'; // Import your axios instance
+import axiosInstance from '../axiosInstance'; 
+import Title from '../components/Title';// Import your axios instance
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -24,6 +25,7 @@ function ForgotPassword() {
 
   return (
     <div className="max-w-md mx-auto mt-5">
+       <Title title={`Forgot Password`} />
       <h2 className="text-2xl font-bold mb-4">Forgot Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input

@@ -5,6 +5,7 @@ import { Skeleton } from '@nextui-org/react';
 import Avatar from './Avatar.jsx';
 import { Link } from 'react-router-dom';
 import MyPost from '../../my-post/MyPost.jsx';
+import Title from '../../../components/Title'; // Import Title component
 
 const fetchUserProfile = async () => {
   const response = await axiosInstance.get(`/profile/user`);
@@ -26,14 +27,14 @@ const Profile = () => {
     return (
       <section id="hero-slider">
         <div className="mx-auto flex flex-row">
-          <div className="bg-gray-200  pr-4 rounded-full w-32 h-32 mt-5">
+          <div className="bg-gray-200 pr-4 rounded-full w-32 h-32 mt-5">
             <Skeleton height="100px" width="70%" className="mb-4" />
           </div>
           <div className="w-2/5 mt-2">
-            <div className="bg-gray-200 rounded-lg  ml-3 pl-4 h-8  mt-5">
+            <div className="bg-gray-200 rounded-lg ml-3 pl-4 h-8 mt-5">
               <Skeleton height="100px" width="70%" className="mb-4" />
             </div>
-            <div className="bg-gray-200 rounded-lg  ml-3 pl-4 h-8 mt-5">
+            <div className="bg-gray-200 rounded-lg ml-3 pl-4 h-8 mt-5">
               <Skeleton height="100px" width="70%" className="mb-4" />
             </div>
           </div>
@@ -69,6 +70,9 @@ const Profile = () => {
 
   return (
     <div className="container mx-auto">
+      {/* Set the page title dynamically based on the user's name */}
+      <Title title={`Profile`} />
+
       <div className="bg-white rounded-lg flex flex-row">
         <Avatar currentAvatar={user.avatar} userName={user.name} placeholderColor={user.placeholder_color} />
         <div className='ml-3'>

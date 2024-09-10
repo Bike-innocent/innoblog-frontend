@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '../axiosInstance';
 import SuccessMessage from '../components/SuccessMessage';
 import Loader from '../components/Loader';
+import Title from '../components/Title';
 
 const fetchUsers = async ({ queryKey }) => {
   const [_key, { page }] = queryKey;
@@ -30,6 +31,7 @@ const AllUsers = () => {
 
   return (
     <div className="container mx-auto p-4">
+       <Title title={`All Users`} />
       <h1 className="text-2xl font-bold">All Users</h1>
       <SuccessMessage message={successMessage} onClose={() => setSuccessMessage('')} />
       {data.data.length === 0 ? (

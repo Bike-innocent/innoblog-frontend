@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import GoogleAuthComponent from './GoogleAuthComponent';
+import { useQueryClient } from '@tanstack/react-query';
+import Title from '../components/Title';
 
 function Register() {
   useEffect(() => {
@@ -15,6 +17,7 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,12 +35,19 @@ function Register() {
         password_confirmation: confirmPassword,
       });
 
+      // Store the auth token
       localStorage.setItem('authToken', response.data.access_token);
       setErrors({});
 
+      // Fetch and cache user data right after registration
+      const userResponse = await axiosInstance.get('/profile/user');
+      queryClient.setQueryData(['AuthUserData'], userResponse.data);
+
       // Retrieve the previous path or default to home
       const previousPath = sessionStorage.getItem('previousPath') || '/';
-      navigate(previousPath);
+      sessionStorage.removeItem('previousPath'); // Clear previous path
+      navigate(previousPath); // Redirect to previous path
+
     } catch (error) {
       console.error('Registration error:', error);
 
@@ -50,8 +60,9 @@ function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-3">
-      <h1 className="text-2xl font-bold mb-4">Innoblog</h1>
+    <div className="max-w-md mx-auto  mt-12 shadow-md p-4">
+       <Title title={`Register`} />
+      <h1 className="text-2xl font-bold mb-4">Register</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -101,8 +112,9 @@ function Register() {
       </form>
 
       <div className="mt-4">
-      <GoogleAuthComponent text="Continue with Google" />
+        <GoogleAuthComponent text="Continue with Google" />
       </div>
+
       <p className="mt-4">
         Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
       </p>

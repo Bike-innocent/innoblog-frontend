@@ -27,23 +27,27 @@ function AuthNavbar({ toggleSidebar }) {
 
   const handleLogout = async () => {
     try {
-      // Clear token before the request
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('title');
-      localStorage.removeItem('content');
-      localStorage.removeItem('category');
-      localStorage.removeItem('subCategory');
+        // Make the logout request while the token is still present
+        const response = await axiosInstance.post('/logout');
+        console.log('Logout successful:', response.data);
 
-      // Post logout request to backend
-      const response = await axiosInstance.post('/logout');
-      console.log('Logout successful:', response.data);
+        // Clear user-related data from localStorage after the request
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('title');
+        localStorage.removeItem('content');
+        localStorage.removeItem('category');
+        localStorage.removeItem('subCategory');
 
-      // Redirect to the login page
-      navigate('/');
+        // Remove any cached user data
+        queryClient.removeQueries(['AuthUserData']);
+
+        // Redirect the user to the home page or login page
+        navigate('/');
     } catch (error) {
-      console.error('Error logging out:', error);
+        console.error('Error logging out:', error);
     }
-  };
+};
+
 
   return (
     <nav className="bg-gray-900 fixed top-0 left-0 w-full z-50">

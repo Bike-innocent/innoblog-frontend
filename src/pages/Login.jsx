@@ -1,3 +1,4 @@
+
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate, Link } from 'react-router-dom';
 // import { useQueryClient } from '@tanstack/react-query';
@@ -10,8 +11,8 @@
 //   const [errors, setErrors] = useState({});
 //   const [generalError, setGeneralError] = useState('');
 //   const navigate = useNavigate();
-  
-//   // React Query's query client to invalidate queries
+
+//   // React Query's query client to cache queries
 //   const queryClient = useQueryClient();
 
 //   useEffect(() => {
@@ -31,15 +32,16 @@
 //       // Store the authentication token
 //       localStorage.setItem('authToken', response.data.access_token);
 
-//       // Invalidate the user query to fetch the latest authenticated user data
-//       queryClient.invalidateQueries(['AuthUserData']);
-
-//       // Delay navigation slightly to allow token setting
+//       // Fetch the user data directly after login and cache it using React Query
+//       const userResponse = await axiosInstance.get('/profile/user');
+//       queryClient.setQueryData(['AuthUserData'], userResponse.data); // Cache the user data
+      
+//       // Navigate after caching user data
 //       setTimeout(() => {
 //         const previousPath = sessionStorage.getItem('previousPath') || '/';
 //         sessionStorage.removeItem('previousPath');
 //         navigate(previousPath);
-//       }, 100); // 100ms delay
+//       }, 100);
 
 //     } catch (error) {
 //       console.error('Login error:', error);
@@ -98,11 +100,13 @@
 // }
 
 // export default Login;
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '../axiosInstance';
 import GoogleAuthComponent from './GoogleAuthComponent';
+import Title from '../components/Title';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -114,9 +118,19 @@ function Login() {
   // React Query's query client to cache queries
   const queryClient = useQueryClient();
 
+  // Check if the user is already authenticated
   useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+
+    if (authToken) {
+      // If authenticated, redirect to the previous path or default to home
+      const previousPath = sessionStorage.getItem('previousPath') || '/';
+      sessionStorage.removeItem('previousPath');
+      navigate(previousPath);
+    }
+
     window.scrollTo(0, 0); // Scroll to the top of the page
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -152,8 +166,9 @@ function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-5">
-      <h1 className="text-2xl font-bold mb-4">Innoblog</h1>
+    <div className="max-w-md mx-auto mt-12 shadow-md p-4">
+       <Title title={`Login`} />
+      <h1 className="text-2xl font-bold mb-4"> Login</h1>
 
       {/* Manual login form */}
       <form onSubmit={handleSubmit}>
@@ -199,3 +214,4 @@ function Login() {
 }
 
 export default Login;
+

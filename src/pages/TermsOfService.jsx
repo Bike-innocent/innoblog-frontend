@@ -1,8 +1,10 @@
 import React from 'react';
+import Title from '../components/Title';
 
 const TermsOfService = () => {
   return (
     <div className=" mx-auto ">
+       <Title title={`Terms of Service`} />
       <h1 className="text-2xl font-bold mb-4">Terms of Service</h1>
       <p>Last updated: September 2024</p>
       

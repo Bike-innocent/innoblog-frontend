@@ -4,7 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Processing from '../../components/Processing';
-import Loader from '../../components/Loader';
+
+import Title from '../../components/Title';
 
 const EditPost = () => {
     const { slug } = useParams();
@@ -17,7 +18,7 @@ const EditPost = () => {
     const [subCategories, setSubCategories] = useState([]);
     const [filteredSubCategories, setFilteredSubCategories] = useState([]);
     const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(true);
+   
     const [processing, setProcessing] = useState(false);
     const navigate = useNavigate();
 
@@ -33,8 +34,6 @@ const EditPost = () => {
                 setSubCategory(post.sub_category_id);
             } catch (error) {
                 console.error('Error fetching post data:', error);
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -45,8 +44,6 @@ const EditPost = () => {
                 setSubCategories(response.data.subCategories);
             } catch (error) {
                 console.error('Error fetching form data:', error);
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -108,9 +105,9 @@ const EditPost = () => {
 
     return (
         <div className="rounded-lg">
-            {loading ? (
-                <Loader />
-            ) : (
+             <Title title={`Edit Post`} />
+
+          
                 <>
                     <h1 className="text-2xl font-semibold mb-4">Edit Post</h1>
                     <form onSubmit={handleSubmit}>
@@ -217,7 +214,7 @@ const EditPost = () => {
                         </div>
                     </form>
                 </>
-            )}
+           
         </div>
     );
 };

@@ -1,8 +1,10 @@
 import React from 'react';
+import Title from '../components/Title';
 
 const PrivacyPolicy = () => {
   return (
     <div className=" mx-auto ">
+       <Title title={`Privacy Policy`} />
       <h1 className="text-2xl font-bold mb-4">Privacy Policy</h1>
       <p>Last updated: September 2024</p>
       

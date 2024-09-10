@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '@nextui-org/react';
 import Avatar from './Avatar.jsx';
 import MyPostUserName from '../../my-post/MyPostUserName.jsx';
+import Title from '../../../components/Title';
 
 const fetchUserProfile = async (username) => {
     const response = await axiosInstance.get(`/profile/${username}`);
@@ -81,6 +82,7 @@ const ProfileUserName = () => {
 
     return (
         <div className="container mx-auto">
+             <Title title={`${username}`} />
             <div className="bg-white rounded-lg flex flex-row">
                 <Avatar username={username} currentAvatar={user.avatar} userName={user.name} placeholderColor={user.placeholder_color} />
                 <div className='ml-3'>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import ManageReport from './ManageReports';
+import Title from '../../components/Title';
 
 function Reports() {
     const [reports, setReports] = useState([]);
@@ -50,6 +51,7 @@ function Reports() {
 
     return (
         <div className="p-4">
+             <Title title={`Reports`} />
             <h1 className="text-2xl font-bold mb-4">Manage Reports Reasons</h1>
             <ManageReport />
 
