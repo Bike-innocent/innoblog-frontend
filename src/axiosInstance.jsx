@@ -3,8 +3,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-baseURL: 'http://localhost:8000/api', 
- //baseURL: 'https://backend.innoblog.com.ng/api',
+  baseURL: 'http://localhost:8000/api', // Use the correct base URL
+  // baseURL: 'https://backend.innoblog.com.ng/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -15,26 +15,34 @@ baseURL: 'http://localhost:8000/api',
   },
 });
 
+// Request Interceptor
 axiosInstance.interceptors.request.use(
   async (config) => {
     try {
       const xsrfTokenExists = document.cookie.includes('XSRF-TOKEN');
 
-      if (!xsrfTokenExists) {
-   await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
-     //   await axios.get('https://backend.innoblog.com.ng/sanctum/csrf-cookie', {
+      // Fetch CSRF token if it doesn't exist
+      if (!xsrfTokenExists && !config.url.includes('/sanctum/csrf-cookie')) {
+        console.log('Fetching CSRF token...');
+        await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+          // await axios.get('https://backend.innoblog.com.ng/sanctum/csrf-cookie', {
           withCredentials: true,
         });
       }
 
+      // Add Authorization header if token exists
       const token = localStorage.getItem('authToken');
       if (token) {
+        console.log('Authorization token found, adding to headers');
         config.headers.Authorization = `Bearer ${token}`;
+      } else {
+        console.log('No Authorization token found');
       }
     } catch (error) {
       console.error('Error in request interceptor:', error);
       return Promise.reject(error);
     }
+
     return config;
   },
   (error) => {
@@ -43,46 +51,30 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response) {
-//       const currentPath = window.location.pathname;
 
-//       if (error.response.status === 401) {
-//         const errorMessage = error.response.data.message;
-        
-//         // If the message is "Invalid credentials", don't redirect, let the component handle it
-//         if (errorMessage !== 'Invalid credentials') {
-//           // Save the current path before redirecting to login (except login/register pages)
-//           if (currentPath !== '/login' && currentPath !== '/register') {
-//             sessionStorage.setItem('previousPath', currentPath);
-//           }
-//           window.location.href = '/login';
-//         }
-//       } else if (error.response.status === 404) {
-//         window.location.href = '/not-found';
-//       }
-//     } else {
-//       console.error('Unexpected error:', error);
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 
-// export default axiosInstance;
+// Response Interceptor
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error) => {
     if (error.response) {
       const currentPath = window.location.pathname;
+      console.log('Response error status:', error.response.status);
+      console.log('Error response data:', error.response.data);
 
+      // Handle 401 Unauthorized
       if (error.response.status === 401) {
         const errorMessage = error.response.data.message;
 
-        // Only redirect if not on the login/register pages
-        if (errorMessage !== 'Invalid credentials' && currentPath !== '/login' && currentPath !== '/register') {
-          // Save the current path before redirecting to login
+        // Only redirect if not on login/register pages and if it's not a CSRF token issue
+        if (
+          errorMessage !== 'Invalid credentials' &&
+          currentPath !== '/login' &&
+          currentPath !== '/register' &&
+          !error.config.url.includes('/sanctum/csrf-cookie')
+        ) {
           sessionStorage.setItem('previousPath', currentPath);
           window.location.href = '/login';
         }
@@ -92,6 +84,7 @@ axiosInstance.interceptors.response.use(
     } else {
       console.error('Unexpected error:', error);
     }
+
     return Promise.reject(error);
   }
 );

@@ -5,6 +5,10 @@ import axiosInstance from '../axiosInstance';
 import GoogleAuthComponent from './GoogleAuthComponent';
 
 function Register() {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
