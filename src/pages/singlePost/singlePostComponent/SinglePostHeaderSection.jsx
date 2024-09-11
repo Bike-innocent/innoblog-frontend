@@ -88,9 +88,10 @@
 
 // export default SinglePostHeaderSection;
 
-import React from 'react';
-import { Helmet } from 'react-helmet';
 
+
+import React from 'react';
+import { Helmet } from 'react-helmet-async'; // Import from react-helmet-async
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../../axiosInstance';
 import { useQuery } from '@tanstack/react-query';
@@ -99,8 +100,6 @@ import { Skeleton } from '@nextui-org/react';
 import PlaceholderImage from './PlaceholderImage';
 import LikeButton from './LikeButton';
 import CommentSection from './CommentSection';
-// import Title from '../../../components/Title'; // Import Title component
-
 
 const fetchPost = async (slug) => {
     const response = await axiosInstance.get(`/blog/show/posts/${slug}`);
@@ -135,7 +134,7 @@ const SinglePostHeaderSection = () => {
 
     return (
         <div className="container mx-auto">
-            {/* Set the meta tags using react-helmet */}
+            {/* Set the meta tags using react-helmet-async */}
             <Helmet>
                 <title>{post.title}</title>
                 <meta property="og:title" content={post.title} />
@@ -144,6 +143,7 @@ const SinglePostHeaderSection = () => {
                 <meta property="og:url" content={`https://innoblog.com.ng/posts/${post.slug}`} />
                 <meta property="og:type" content="article" />
                 <meta name="twitter:card" content="summary_large_image" />
+                <meta name="description" content={post.excerpt || "Read the full post to know more."} />
             </Helmet>
 
             <div className="bg-white rounded-lg">
@@ -188,4 +188,3 @@ const SinglePostHeaderSection = () => {
 };
 
 export default SinglePostHeaderSection;
-

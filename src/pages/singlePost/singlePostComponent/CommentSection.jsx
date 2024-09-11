@@ -1,3 +1,5 @@
+
+
 // import React, { useState, useRef } from 'react';
 // import axiosInstance from '../../../axiosInstance';
 // import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -13,7 +15,12 @@
 //   return response.data;
 // };
 
-// const CommentSection = ({ slug, postId, }) => {
+// const deleteComment = async (comment_id) => {
+//   const response = await axiosInstance.delete(`/comments/${comment_id}`);
+//   return response.data;
+// };
+
+// const CommentSection = ({ slug, postId }) => {
 //   const [newComment, setNewComment] = useState('');
 //   const [replyTo, setReplyTo] = useState(null);
 //   const queryClient = useQueryClient();
@@ -37,10 +44,17 @@
 //       queryClient.invalidateQueries(['comments', postId]);
 //       setNewComment('');
 //       setReplyTo(null);
-//       setEditComment(null); // Reset the edit state
+//       setEditComment(null);
 //       if (commentInputRef.current) {
-//         commentInputRef.current.innerHTML = ''; // Clear the input field
+//         commentInputRef.current.innerHTML = '';
 //       }
+//     },
+//   });
+
+//   const deleteMutation = useMutation({
+//     mutationFn: (comment_id) => deleteComment(comment_id),
+//     onSuccess: () => {
+//       queryClient.invalidateQueries(['comments', postId]);
 //     },
 //   });
 
@@ -66,13 +80,11 @@
 
 //   const handleAddComment = () => {
 //     if (editComment) {
-//       // Update the existing comment
 //       commentMutation.mutate({
 //         comment_id: editComment.id,
 //         content: newComment,
 //       });
 //     } else {
-//       // Add a new comment
 //       commentMutation.mutate({
 //         post_id: postId,
 //         content: newComment,
@@ -108,16 +120,9 @@
 //     }
 //   };
 
-//   const handleDelete  = async (comment) =>{
-//     try {
-//         await axiosInstance.delete(`/comments/${comment.id}`);
-//         // Refresh comments or update state accordingly
-//       } catch (error) {
-//         console.error('Error deleting comment:', error);
-//       }
+//   const handleDelete = (comment) => {
+//     deleteMutation.mutate(comment.id);
 //   };
-
-
 
 //   const handleReport = (comment) => {
 //     // Handle reporting logic here
@@ -126,15 +131,13 @@
 //   const hasComments = comments && comments.length > 0;
 //   const commentCount = hasComments ? comments.filter(comment => comment.parent_id === null).length : 0;
 
-
 //   return (
 //     <div className="mt-8">
 //       <h3 className="text-2xl font-semibold mb-4">
 //         {commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}
 //       </h3>
 //       {hasComments ? (
-//         <div className="max-h-96 p-3 overflow-y-auto border border-gray-300 rounded no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-
+//         <div className="max-h-96 p-3 overflow-y-auto border border-gray-300 rounded no-scrollbar">
 //           {comments.map(comment => (
 //             <Comment
 //               key={comment.id}
@@ -154,11 +157,10 @@
 //           ref={commentInputRef}
 //           contentEditable
 //           onInput={handleInputChange}
-//           className=" p-2 border rounded"
+//           className="p-2 border rounded"
 //           placeholder="Add a comment..."
-
 //         />
-//         <div className="mt-2  space-x-2">
+//         <div className="mt-2 space-x-2">
 //           <button
 //             onClick={handleAddComment}
 //             className="bg-blue-500 text-white py-2 px-4 rounded"
@@ -185,6 +187,7 @@ import React, { useState, useRef } from 'react';
 import axiosInstance from '../../../axiosInstance';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Comment from './Comment';
+import { useNavigate } from 'react-router-dom'; // For redirecting to login
 
 const fetchComments = async (postId) => {
   const response = await axiosInstance.get(`/posts/${postId}/comments`);
@@ -205,6 +208,7 @@ const CommentSection = ({ slug, postId }) => {
   const [newComment, setNewComment] = useState('');
   const [replyTo, setReplyTo] = useState(null);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const commentInputRef = useRef(null);
   const [editComment, setEditComment] = useState(null);
 
@@ -228,6 +232,13 @@ const CommentSection = ({ slug, postId }) => {
       setEditComment(null);
       if (commentInputRef.current) {
         commentInputRef.current.innerHTML = '';
+      }
+    },
+    onError: (error) => {
+      if (error.response?.status === 401) {
+        navigate('/login');
+      } else {
+        console.error('Error handling comment:', error);
       }
     },
   });
@@ -260,6 +271,13 @@ const CommentSection = ({ slug, postId }) => {
   };
 
   const handleAddComment = () => {
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+      navigate('/login');
+      return;
+    }
+
     if (editComment) {
       commentMutation.mutate({
         comment_id: editComment.id,
@@ -363,3 +381,5 @@ const CommentSection = ({ slug, postId }) => {
 };
 
 export default CommentSection;
+
+

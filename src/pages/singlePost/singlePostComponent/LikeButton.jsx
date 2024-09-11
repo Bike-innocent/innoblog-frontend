@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { AiOutlineLike } from 'react-icons/ai';
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 import axiosInstance from '../../../axiosInstance';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom'; // For redirecting to login
 
 const LikeButton = ({ slug, initialLikes, isInitiallyLiked }) => {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
     const [isLiked, setIsLiked] = useState(isInitiallyLiked);
     const [likesCount, setLikesCount] = useState(initialLikes);
 
@@ -16,24 +18,35 @@ const LikeButton = ({ slug, initialLikes, isInitiallyLiked }) => {
         onSuccess: (data) => {
             setLikesCount(data.likes_count);
             setIsLiked(data.is_liked_by_user); // Update based on the backend response
-            queryClient.invalidateQueries(['postrt', slug]);
+            queryClient.invalidateQueries(['postrt', slug]); // Refetch post data
         },
         onError: (error) => {
             console.error('Error liking the post:', error);
         },
     });
 
-    const handleLike = () => {
+    const handleLike = async () => {
+        // Check if the user is authenticated by checking for authToken in localStorage
+        const authToken = localStorage.getItem('authToken');
+        
+        if (!authToken) {
+            // Redirect to login if not authenticated
+            navigate('/login');
+            return;
+        }
+
+        // If authenticated, send like request
         likeMutation.mutate();
     };
 
     return (
         <div className="flex items-center">
             <button onClick={handleLike} className="p-2">
-                <AiOutlineLike
-                    size={24}
-                    className={`${isLiked ? 'text-blue-500' : 'text-gray-500'}`} // Color based on isLiked state
-                />
+                {isLiked ? (
+                    <AiFillLike size={24} className="text-blue-500" /> // Filled, colored like icon when liked
+                ) : (
+                    <AiOutlineLike size={24} className="text-gray-500" /> // Outline like icon when not liked
+                )}
             </button>
             <span className="ml-1 text-lg">{likesCount}</span>
         </div>

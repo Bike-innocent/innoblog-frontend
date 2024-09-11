@@ -1,12 +1,12 @@
 
 
 
-
 // import React, { useState, Fragment } from 'react';
 // import { Menu, Transition, Dialog } from '@headlessui/react';
 // import { BsThreeDotsVertical, BsPencil, BsTrash, BsFlag } from 'react-icons/bs';
 // import { useQuery } from '@tanstack/react-query';
 // import axiosInstance from '../../../axiosInstance';
+// import CommentReport from './CommentReport'; // Import the CommentReport component
 
 // const fetchUserData = async () => {
 //   const response = await axiosInstance.get('/profile/user');
@@ -15,9 +15,10 @@
 
 // const CommentDropdown = ({ comment, onEdit, onDelete, onReport }) => {
 //   const [isDialogOpen, setIsDialogOpen] = useState(false);
+//   const [isReportOpen, setIsReportOpen] = useState(false); // State for CommentReport modal
 
 //   const { data: userData, isLoading, isError } = useQuery({
-//     queryKey: ['user'],
+//     queryKey: ['usercomment'],
 //     queryFn: fetchUserData,
 //   });
 
@@ -26,17 +27,20 @@
 //   const openDialog = () => setIsDialogOpen(true);
 //   const closeDialog = () => setIsDialogOpen(false);
 
+//   const openReport = () => setIsReportOpen(true); // Open the report modal
+//   const closeReport = () => setIsReportOpen(false); // Close the report modal
+
 //   const handleDelete = () => {
 //     onDelete(comment);
 //     closeDialog();
 //   };
 
 //   if (isLoading) {
-//     return <div>Loading...</div>;
+//     return <div></div>;
 //   }
 
 //   if (isError) {
-//     return <div>Error fetching user data</div>;
+//     return <div></div>;
 //   }
 
 //   return (
@@ -89,7 +93,7 @@
 //                 <Menu.Item>
 //                   {({ active }) => (
 //                     <button
-//                       onClick={() => onReport(comment)}
+//                       onClick={openReport}
 //                       className={`${
 //                         active ? 'bg-yellow-500 text-white' : 'text-gray-900'
 //                       } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
@@ -165,6 +169,15 @@
 //           </div>
 //         </Dialog>
 //       </Transition>
+
+//       {/* Comment Report Modal */}
+//       {isReportOpen && (
+//         <CommentReport
+//           commentId={comment.id}
+//           isOpen={isReportOpen}
+//           onClose={closeReport}
+//         />
+//       )}
 //     </>
 //   );
 // };
@@ -181,6 +194,12 @@ import axiosInstance from '../../../axiosInstance';
 import CommentReport from './CommentReport'; // Import the CommentReport component
 
 const fetchUserData = async () => {
+  const token = localStorage.getItem('authToken'); // Adjust the key to match your token key
+
+  if (!token) {
+    return {}; // Or handle the case when the token is not available
+  }
+
   const response = await axiosInstance.get('/profile/user');
   return response.data;
 };
@@ -190,8 +209,9 @@ const CommentDropdown = ({ comment, onEdit, onDelete, onReport }) => {
   const [isReportOpen, setIsReportOpen] = useState(false); // State for CommentReport modal
 
   const { data: userData, isLoading, isError } = useQuery({
-    queryKey: ['userthtr0'],
+    queryKey: ['usercomment'],
     queryFn: fetchUserData,
+    staleTime: 30000, // Optional: Set stale time to reduce the frequency of fetches
   });
 
   const isAuthUser = userData?.id === comment.user_id;
@@ -208,11 +228,11 @@ const CommentDropdown = ({ comment, onEdit, onDelete, onReport }) => {
   };
 
   if (isLoading) {
-    return <div></div>;
+    return <div>Loading...</div>; // Show a loading indicator
   }
 
   if (isError) {
-    return <div></div>;
+    return <div>Error fetching user data</div>; // Handle error case
   }
 
   return (
@@ -355,6 +375,3 @@ const CommentDropdown = ({ comment, onEdit, onDelete, onReport }) => {
 };
 
 export default CommentDropdown;
-
-
-
