@@ -39,7 +39,7 @@ function ResetPassword() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-5">
+    <div className="max-w-md p-3 shadow  mx-auto mt-12">
        <Title title={`Reset Password`} />
       <h2 className="text-2xl font-bold mb-4">Reset Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">

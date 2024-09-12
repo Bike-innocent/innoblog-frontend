@@ -90,7 +90,7 @@ const SinglePostHeaderSection = () => {
                         {post.category.name} | {new Date(post.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).toUpperCase()}
                     </div>
                 </div>
-                <div className="flex items-center justify-between mt-4">
+                <div className="flex items-center justify-between mt-4 ">
                     {/* Left section: User info and like button */}
                     <div className="flex items-center">
                         <Link to={`/${post.user.username}`}>
@@ -108,7 +108,7 @@ const SinglePostHeaderSection = () => {
                             </p>
                         </div>
 
-                        <div className="ml-4">
+                        <div className="ml-8 sm-ml-4">
                             <LikeButton
                                 slug={slug}
                                 initialLikes={post.likes_count}

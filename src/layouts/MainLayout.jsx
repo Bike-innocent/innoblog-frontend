@@ -72,17 +72,7 @@ function MainLayout() {
             window.history.replaceState({}, document.title, window.location.pathname);
     
             // Fetch user data after storing token
-            const fetchUserProfile = async () => {
-                try {
-                    const userResponse = await axiosInstance.get('/profile/user');
-                    queryClient.setQueryData(['AuthUserData'], userResponse.data); // Cache user data
-                } catch (error) {
-                    console.error('Error fetching user profile after OAuth login:', error);
-                }
-            };
-    
-            // Fetch the user profile and cache it
-            fetchUserProfile();
+           
     
             // Get previous path from sessionStorage, default to '/'
             const previousPath = sessionStorage.getItem('previousPath') || '/';

@@ -43,12 +43,12 @@ const LikeButton = ({ slug, initialLikes, isInitiallyLiked }) => {
         <div className="flex items-center">
             <button onClick={handleLike} className="p-2">
                 {isLiked ? (
-                    <AiFillLike size={24} className="text-blue-500" /> // Filled, colored like icon when liked
+                    <AiFillLike size={25} className="text-blue-500" /> // Filled, colored like icon when liked
                 ) : (
-                    <AiOutlineLike size={24} className="text-gray-500" /> // Outline like icon when not liked
+                    <AiOutlineLike size={25} className="text-gray-500" /> // Outline like icon when not liked
                 )}
             </button>
-            <span className="ml-1 text-lg">{likesCount}</span>
+            <span className=" text-lg ">{likesCount}</span>
         </div>
     );
 };

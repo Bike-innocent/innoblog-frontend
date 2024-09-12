@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // Define the fetchReportReasons function
 const fetchReportReasons = async () => {
-    const response = await axiosInstance.get('/report-reasons-dropdown'); // Adjust the endpoint to match your API
+    const response = await axiosInstance.get('/report-reasons'); // Adjust the endpoint to match your API
     return response.data;
 };
 
