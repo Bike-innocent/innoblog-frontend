@@ -227,13 +227,13 @@ const CommentDropdown = ({ comment, onEdit, onDelete, onReport }) => {
     closeDialog();
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>; // Show a loading indicator
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>; // Show a loading indicator
+  // }
 
-  if (isError) {
-    return <div>Error fetching user data</div>; // Handle error case
-  }
+  // if (isError) {
+  //   return <div>Error fetching user data</div>; // Handle error case
+  // }
 
   return (
     <>

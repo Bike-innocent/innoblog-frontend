@@ -82,7 +82,7 @@ function Reports() {
                         {report.comment && (
                             <>
                                 <p className="text-gray-600">
-                                    Comment: <div dangerouslySetInnerHTML={{ __html: report.comment.content }} />
+                                    Comment: <span dangerouslySetInnerHTML={{ __html: report.comment.content }} />
                                 </p>
                                 <p className="text-gray-600">
                                     Commented by:

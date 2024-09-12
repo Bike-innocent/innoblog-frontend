@@ -1,9 +1,11 @@
 
+
 // import React, { useState, useEffect } from 'react';
 // import { useNavigate, Link } from 'react-router-dom';
 // import { useQueryClient } from '@tanstack/react-query';
 // import axiosInstance from '../axiosInstance';
 // import GoogleAuthComponent from './GoogleAuthComponent';
+// import Title from '../components/Title';
 
 // function Login() {
 //   const [email, setEmail] = useState('');
@@ -15,9 +17,19 @@
 //   // React Query's query client to cache queries
 //   const queryClient = useQueryClient();
 
+//   // Check if the user is already authenticated
 //   useEffect(() => {
+//     const authToken = localStorage.getItem('authToken');
+
+//     if (authToken) {
+//       // If authenticated, redirect to the previous path or default to home
+//       const previousPath = sessionStorage.getItem('previousPath') || '/';
+//       sessionStorage.removeItem('previousPath');
+//       navigate(previousPath);
+//     }
+
 //     window.scrollTo(0, 0); // Scroll to the top of the page
-//   }, []);
+//   }, [navigate]);
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
@@ -53,8 +65,9 @@
 //   };
 
 //   return (
-//     <div className="max-w-md mx-auto mt-5">
-//       <h1 className="text-2xl font-bold mb-4">Innoblog</h1>
+//     <div className="max-w-md mx-auto mt-12 shadow-md p-4">
+//        <Title title={`Login`} />
+//       <h1 className="text-2xl font-bold mb-4"> Login</h1>
 
 //       {/* Manual login form */}
 //       <form onSubmit={handleSubmit}>
@@ -101,6 +114,7 @@
 
 // export default Login;
 
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
@@ -118,15 +132,37 @@ function Login() {
   // React Query's query client to cache queries
   const queryClient = useQueryClient();
 
+  // Check if the auth token is valid
+  const validateAuthToken = async (token) => {
+    try {
+      const response = await axiosInstance.get('/profile/user', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.status === 200;
+    } catch (error) {
+      return false; // If an error occurs, assume the token is invalid
+    }
+  };
+
   // Check if the user is already authenticated
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
 
     if (authToken) {
-      // If authenticated, redirect to the previous path or default to home
-      const previousPath = sessionStorage.getItem('previousPath') || '/';
-      sessionStorage.removeItem('previousPath');
-      navigate(previousPath);
+      validateAuthToken(authToken).then((isValid) => {
+        if (isValid) {
+          // If the token is valid, redirect to the previous path or home
+          const previousPath = sessionStorage.getItem('previousPath') || '/';
+          sessionStorage.removeItem('previousPath');
+          navigate(previousPath);
+        } else {
+          // If the token is invalid, remove it and stay on the login page
+          localStorage.removeItem('authToken');
+          navigate('/login');
+        }
+      });
     }
 
     window.scrollTo(0, 0); // Scroll to the top of the page

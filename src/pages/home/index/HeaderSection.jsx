@@ -55,14 +55,14 @@ const HeaderSection = () => {
             {[1, 2, 3, 4, 5, 6].map((_, index) => (
               <div key={index} className="w-full group">
                 <div className="block">
-                  <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
+                  <Skeleton className="w-full h-[200px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
                     <div className="w-1/5">
                       <Skeleton className="w-10 h-10 rounded-full" />
                     </div>
                     <div className="flex flex-col pl-2 w-full">
-                      <Skeleton className="h-5 w-full rounded-lg" />
-                      <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
+                      <Skeleton className="h-5 w-full " />
+                      <Skeleton className="h-4 w-3/4 mt-1 " />
                     </div>
                   </div>
                 </div>
@@ -92,14 +92,14 @@ const HeaderSection = () => {
             {[1, 2, 3].map((_, index) => (
               <div key={index} className="w-full group">
                 <div className="block">
-                  <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
+                  <Skeleton className="w-full h-[200px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
                     <div className="w-1/5">
                       <Skeleton className="w-10 h-10 rounded-full" />
                     </div>
                     <div className="flex flex-col pl-2 w-full">
-                      <Skeleton className="h-5 w-full rounded-lg" />
-                      <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
+                      <Skeleton className="h-5 w-full " />
+                      <Skeleton className="h-4 w-3/4 mt-1 " />
                     </div>
                   </div>
                 </div>

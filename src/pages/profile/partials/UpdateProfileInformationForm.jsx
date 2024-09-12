@@ -160,7 +160,7 @@ export default function UpdateProfileInformation({ className = '' }) {
     const submit = async (e) => {
         e.preventDefault();
         setProcessing(true);
-        console.log('Form data before submission:', data);
+        // console.log('Form data before submission:', data);
 
         try {
             await updateUserProfile.mutateAsync(data);

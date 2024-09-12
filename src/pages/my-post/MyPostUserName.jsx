@@ -283,7 +283,7 @@ const MyPostUserName = ({ username }) => {
 
   return (
     <section>
-      <div className="container mx-auto my-4" data-aos="fade-in">
+      <div className="container mx-auto " data-aos="fade-in">
         <Tab.Group>
           <Tab.List className="flex p-1 space-x-1 rounded-xl">
             <Tab

@@ -18,7 +18,7 @@ const LikeButton = ({ slug, initialLikes, isInitiallyLiked }) => {
         onSuccess: (data) => {
             setLikesCount(data.likes_count);
             setIsLiked(data.is_liked_by_user); // Update based on the backend response
-            queryClient.invalidateQueries(['postrt', slug]); // Refetch post data
+            queryClient.invalidateQueries(['post-like', slug]); // Refetch post data
         },
         onError: (error) => {
             console.error('Error liking the post:', error);

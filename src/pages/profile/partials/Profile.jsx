@@ -47,8 +47,8 @@ const Profile = () => {
                   <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
                     <div className="flex flex-col w-full">
-                      <Skeleton className="h-5 w-full rounded-lg" />
-                      <Skeleton className="h-4 w-3/4 mt-1 rounded-lg" />
+                      <Skeleton className="h-5 w-full " />
+                      <Skeleton className="h-4 w-3/4 mt-1 " />
                     </div>
                   </div>
                 </div>
@@ -76,9 +76,16 @@ const Profile = () => {
       <div className="bg-white rounded-lg flex flex-row">
         <Avatar currentAvatar={user.avatar} userName={user.name} placeholderColor={user.placeholder_color} />
         <div className='ml-3'>
-          <h1 className="text-3xl font-bold mb-1 mt-3">{user.name}</h1>
+          <h1 className="text-3xl font-bold mb-1 mt-3">
+           
+            {user.name.length > 20
+                ? `${user.name.slice(0, 20)}...`
+                : user.name}
+            </h1>
+         
+
           <p>{user.username}</p>
-          
+
           <Link to={`/profile/edit`} className='text-blue-500 mt-2'>edit</Link>
         </div>
       </div>

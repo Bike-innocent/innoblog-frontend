@@ -29,7 +29,7 @@ function SinglePostTabs() {
 
   return (
     <Tab.Group>
-      <Tab.List className="flex p-1 space-x-1">
+      <Tab.List className="flex p-1 space-x-1 mt-8">
         <Tab
           key="related"
           className={({ selected }) =>
@@ -88,3 +88,4 @@ function SinglePostTabs() {
 }
 
 export default SinglePostTabs;
+
