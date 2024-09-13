@@ -38,7 +38,7 @@ const ProfileUserName = () => {
     if (isLoading || authLoading) {
         return (
             <section id="hero-slider">
-                <div className="mx-auto flex flex-row">
+                <div className="container mx-auto flex flex-row">
                     <div className="bg-gray-200  pr-4 rounded-full w-32 h-32 mt-5">
                         <Skeleton height="100px" width="70%" className="mb-4" />
                     </div>

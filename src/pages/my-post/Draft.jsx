@@ -6,13 +6,13 @@ import PostActions from './PostActions';
 
 const Draft = ({ post, refreshPosts }) => {
   return (
-    <div className="w-full group">
+    <div className="w-full group mb-4">
       <div className="relative">
         <Link to={`/edit-post/${post.slug}`} className="block">
           <img
             src={post.image}
             alt={post.title}
-            className="w-full h-[210px] md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
+            className="w-full h-[210px] shadow md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
           />
         </Link>
         <div className="flex pt-2">

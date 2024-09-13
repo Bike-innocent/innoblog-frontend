@@ -46,10 +46,10 @@ const UserAvatar = ({ currentAvatar, userName, placeholderColor }) => {
         },
         onError: (error) => {
             if (error.response && error.response.data && error.response.data.errors) {
-                setError('Failed to update avatar: ' + error.response.data.errors.avatar[0]);
+                setError(error.response.data.errors.avatar[0]);
             } else {
                 console.error('Failed to update avatar:', error);
-                setError('An unexpected error occurred.');
+                setError('An unexpected error occurred, try again later.');
             }
         },
     });

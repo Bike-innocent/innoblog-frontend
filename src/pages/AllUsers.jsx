@@ -44,6 +44,7 @@ const AllUsers = () => {
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>username</th>
                 <th>Roles</th>
               </tr>
             </thead>
@@ -53,6 +54,7 @@ const AllUsers = () => {
                   <td>{index + 1 + (currentPage - 1) * 10}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
+                  <td>{user.username}</td>
                   <td>{user.roles.join(', ')}</td>
                 </tr>
               ))}

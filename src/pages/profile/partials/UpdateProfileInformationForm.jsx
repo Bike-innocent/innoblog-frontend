@@ -1,23 +1,21 @@
+
 // import React, { useState, useEffect } from 'react';
-// import axiosInstance from '../../../axiosInstance';
 // import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 // import Processing from '../../../components/Processing';
+// import axiosInstance from '../../../axiosInstance';
 
 // export default function UpdateProfileInformation({ className = '' }) {
 //     const queryClient = useQueryClient();
 
+//     // Use the existing query from AppProvider
 //     const { data: userProfile, error } = useQuery({
-//         queryKey: ['userProfile'],
-//         queryFn: async () => {
-//             const response = await axiosInstance.get('/profile/user');
-//             return response.data;
-//         },
+//         queryKey: ['AuthUserData'], // Use the same queryKey defined in AppProvider
 //     });
 
 //     const updateUserProfile = useMutation({
 //         mutationFn: (newUserData) => axiosInstance.patch('/profile/update', newUserData),
 //         onSuccess: () => {
-//             queryClient.invalidateQueries(['userProfile']);
+//             queryClient.invalidateQueries(['AuthUserData']); // Invalidate the same query key
 //         },
 //     });
 
@@ -31,7 +29,11 @@
 //             console.error('Error fetching user profile:', error);
 //         }
 //         if (userProfile) {
-//             setData({ name: userProfile.name || '', email: userProfile.email || '', username: userProfile.username?.replace(/^@/, '') || '' });
+//             setData({ 
+//                 name: userProfile.name || '', 
+//                 email: userProfile.email || '', 
+//                 username: userProfile.username?.replace(/^@/, '') || '' 
+//             });
 //         }
 //     }, [userProfile, error]);
 
@@ -42,7 +44,7 @@
 //     const submit = async (e) => {
 //         e.preventDefault();
 //         setProcessing(true);
-//         console.log('Form data before submission:', data);
+//         // console.log('Form data before submission:', data);
 
 //         try {
 //             await updateUserProfile.mutateAsync(data);
@@ -99,7 +101,6 @@
 //                     {errors.username && <p className="mt-2 text-sm text-red-600">{errors.username}</p>}
 //                 </div>
 
-
 //                 <div className="flex items-center gap-4">
 //                     <button
 //                         type="submit"
@@ -115,6 +116,8 @@
 //     );
 // }
 
+
+
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Processing from '../../../components/Processing';
@@ -123,15 +126,14 @@ import axiosInstance from '../../../axiosInstance';
 export default function UpdateProfileInformation({ className = '' }) {
     const queryClient = useQueryClient();
 
-    // Use the existing query from AppProvider
     const { data: userProfile, error } = useQuery({
-        queryKey: ['AuthUserData'], // Use the same queryKey defined in AppProvider
+        queryKey: ['AuthUserData'],
     });
 
     const updateUserProfile = useMutation({
         mutationFn: (newUserData) => axiosInstance.patch('/profile/update', newUserData),
         onSuccess: () => {
-            queryClient.invalidateQueries(['AuthUserData']); // Invalidate the same query key
+            queryClient.invalidateQueries(['AuthUserData']);
         },
     });
 
@@ -160,11 +162,14 @@ export default function UpdateProfileInformation({ className = '' }) {
     const submit = async (e) => {
         e.preventDefault();
         setProcessing(true);
-        // console.log('Form data before submission:', data);
 
         try {
-            await updateUserProfile.mutateAsync(data);
-            console.log('Profile updated successfully');
+            const updatedData = {
+                ...data,
+                username: data.username.trim().length > 0 ? data.username : undefined,
+            };
+
+            await updateUserProfile.mutateAsync(updatedData);
             setRecentlySuccessful(true);
             setTimeout(() => setRecentlySuccessful(false), 3000);
             setErrors({});
