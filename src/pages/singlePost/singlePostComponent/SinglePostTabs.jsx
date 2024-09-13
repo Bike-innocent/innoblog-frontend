@@ -68,7 +68,7 @@ function SinglePostTabs() {
                   <div className="text-gray-500 text-sm">
                     {new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' })}
                   </div>
-                  <h2 className="text-lg font-semibold">{post.title}</h2>
+                  <h4 className="text-md font-semibold">{post.title}</h4>
                   {post.user && (
                     <div className="text-gray-700 text-sm">{post.user.name}</div>
                   )}
@@ -88,4 +88,3 @@ function SinglePostTabs() {
 }
 
 export default SinglePostTabs;
-
