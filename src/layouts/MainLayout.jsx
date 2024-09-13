@@ -60,32 +60,35 @@ function MainLayout() {
     };
     
 
+ 
+
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
-        const token = queryParams.get('token');
-    
-        if (token) {
-            // Store the token in localStorage
-            localStorage.setItem('authToken', token);
-    
-            // Remove the token from the URL to clean up the address bar
+        const authToken = queryParams.get('authToken'); // Look for 'authToken' instead of 'token'
+        
+        if (authToken) {
+            // Store the authToken in localStorage
+            localStorage.setItem('authToken', authToken);
+        
+            // Remove the authToken from the URL to clean up the address bar
             window.history.replaceState({}, document.title, window.location.pathname);
-    
+        
             // Fetch user data after storing token
-           
-    
+            // (Your logic here)
+        
             // Get previous path from sessionStorage, default to '/'
             const previousPath = sessionStorage.getItem('previousPath') || '/';
             
             // Clear previous path from sessionStorage
             sessionStorage.removeItem('previousPath');
-    
+        
             // Redirect to the previous path after caching user data
             setTimeout(() => {
                 navigate(previousPath);
             }, 100);
         }
     }, [navigate, queryClient]);
+    
     
     
     return (
