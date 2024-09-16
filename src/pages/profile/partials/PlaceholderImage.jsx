@@ -12,7 +12,7 @@ const isColorLight = (color) => {
 
 const PlaceholderImage = ({ name, avatar, placeholderColor }) => {
   if (avatar) {
-    return <img src={avatar} alt={`${name || 'User'}'s avatar`} className="w-32 h-32 rounded-full object-cover" />;
+    return <img src={avatar} alt={`${name || 'User'}'s avatar`} className=" border-2 border-gray-200 w-32 h-32 rounded-full object-cover" />;
   }
 
   const initial = name ? name.charAt(0).toUpperCase() : '';

@@ -12,7 +12,7 @@ const Published = ({ post, refreshPosts}) => {
           <img
             src={post.image}
             alt={post.title}
-            className="w-full h-[210px] md:h-[250px] shadow object-cover rounded-lg group-hover:opacity-75 transition-opacity"
+            className="w-full h-[210px] sm:h-[280px] md:h-[250px] shadow object-cover rounded-lg group-hover:opacity-75 transition-opacity"
           />
         </Link>
         <div className="flex pt-2">

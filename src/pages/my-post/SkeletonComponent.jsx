@@ -8,7 +8,7 @@ const SkeletonComponent = ({ count = 6 }) => {
       {Array.from({ length: count }).map((_, index) => (
         <div key={index} className="w-full group">
           <div className="block">
-            <Skeleton className="w-full h-[180px] md:h-[250px] object-cover rounded-lg" />
+            <Skeleton className="w-full h-[180px] sm:h-[280px] md:h-[250px] object-cover rounded-lg" />
             <div className="flex pt-2">
               <div className="flex flex-col w-full">
                 <Skeleton className="h-5 w-full " />

@@ -55,7 +55,7 @@ const HeaderSection = () => {
             {[1, 2, 3, 4, 5, 6].map((_, index) => (
               <div key={index} className="w-full group">
                 <div className="block">
-                  <Skeleton className="w-full h-[200px] md:h-[250px] object-cover rounded-lg" />
+                  <Skeleton className="w-full h-[200px] sm:h-[280px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
                     <div className="w-1/5">
                       <Skeleton className="w-10 h-10 rounded-full" />
@@ -92,7 +92,7 @@ const HeaderSection = () => {
             {[1, 2, 3].map((_, index) => (
               <div key={index} className="w-full group">
                 <div className="block">
-                  <Skeleton className="w-full h-[200px] md:h-[250px] object-cover rounded-lg" />
+                  <Skeleton className="w-full h-[200px] sm:h-[280px] md:h-[250px] object-cover rounded-lg" />
                   <div className="flex pt-2">
                     <div className="w-1/5">
                       <Skeleton className="w-10 h-10 rounded-full" />

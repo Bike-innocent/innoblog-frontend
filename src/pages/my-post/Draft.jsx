@@ -12,7 +12,7 @@ const Draft = ({ post, refreshPosts }) => {
           <img
             src={post.image}
             alt={post.title}
-            className="w-full h-[210px] shadow md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
+            className="w-full h-[210px] sm:h-[280px] shadow md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
           />
         </Link>
         <div className="flex pt-2">
