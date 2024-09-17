@@ -32,12 +32,7 @@ const SinglePostHeaderSection = () => {
     if (isLoading) {
         return (
             <>
-            {/* <div className="mx-auto">
-
-                <div className="bg-gray-200 rounded-lg p-4 h-64 md:h-96 mt-5">
-                    <Skeleton height="500px" width="70%" className="mb-4" />
-                </div>
-            </div> */}
+         
              <div className="block h-64 md:h-96 mt-6">
              <Skeleton className="h-5 w-full " />
              <Skeleton className="h-4 w-3/4 mt-1 " />
@@ -79,7 +74,7 @@ const SinglePostHeaderSection = () => {
             </Helmet>
 
             <div className="bg-white rounded-lg">
-                <h1 className="text-3xl font-bold mb-1 mt-3">{post.title}</h1>
+                <h1 className="text-2xl font-bold mb-1 mt-2">{post.title}</h1>
                 <div className="relative">
                     <img
                         src={post.image}
@@ -124,7 +119,7 @@ const SinglePostHeaderSection = () => {
                 </div>
 
                 {/* Render post content as HTML */}
-                <div className="custom-quill-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div className="custom-quill-content " dangerouslySetInnerHTML={{ __html: post.content }} />
 
                 {/* Pass both slug and post ID to CommentSection */}
                 <CommentSection slug={slug} postId={post.id} />

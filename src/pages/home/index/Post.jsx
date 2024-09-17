@@ -15,7 +15,7 @@ const Post = ({ post, }) => {
                     <img
                         src={post.image}
                         alt={post.title}
-                        className="w-full h-[210px] sm:h-[280px] md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
+                        className="w-full h-[210px] border-1 border-gray-200 sm:h-[280px] md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
                     />
                 </Link>
                 <div className="flex pt-2">
@@ -26,10 +26,10 @@ const Post = ({ post, }) => {
                             placeholderColor={post.user.placeholder_color}
                         />
                     </Link>
-                    <div className="flex-1 flex items-center justify-between">
+                    <div className="flex-1 flex  justify-between">
                         <Link to={`/posts/${post.slug}`} className="flex-1">
-                            <h2 className="text-xl font-semibold m-0 p-0 group-hover:underline">
-                                {post.title.length > 45 ? `${post.title.substring(0, 45)}...` : post.title}
+                            <h2 className="text-lg font-semibold m-0 p-0 group-hover:underline">
+                                {post.title.length > 50 ? `${post.title.substring(0, 50)}...` : post.title}
                             </h2>
                         </Link>
                         <PostDropdown post={post}  setSuccessMessage={notifySuccess} />

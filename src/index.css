@@ -116,7 +116,9 @@ overflow: scroll;
     border-bottom: 1px solid #d1d5db; /* Optional: add a bottom border to the toolbar */
 }
 
-
+.custom-quill-content{
+    font-size: 17px;
+}
 
 .custom-quill-content a {
     color: #0000EE; /* Default color for links */

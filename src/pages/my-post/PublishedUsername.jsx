@@ -19,7 +19,7 @@ const PublishedUsername = ({ post, refreshPosts, isAuthUser }) => {
         <div className="flex pt-2">
           <div className="flex-1 flex justify-between">
             <Link to={`/posts/${post.slug}`} className="flex-1">
-              <h2 className="text-xl font-semibold m-0 p-0 group-hover:underline">
+              <h2 className="text-lg font-semibold m-0 p-0 group-hover:underline">
                 {post.title.length > 40 ? post.title.substring(0, 40) + '...' : post.title}
               </h2>
             </Link>

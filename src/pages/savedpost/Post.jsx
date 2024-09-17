@@ -23,10 +23,10 @@ const Post = ({ post, isSaved, onRemove }) => {
             />
           </Link>
           
-          <div className="flex-1 flex items-center justify-between">
+          <div className="flex-1 flex justify-between">
             <Link to={`/posts/${post.slug}`} className="flex-1">
-              <h2 className="text-xl font-semibold m-0 p-0 group-hover:underline">
-                {post.title.length > 40 ? post.title.substring(0, 40) + '...' : post.title}
+              <h2 className="text-lg font-semibold m-0 p-0 group-hover:underline">
+                {post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title}
               </h2>
             </Link>
             <PostDropdown post={post} isSaved={isSaved} onRemove={onRemove} /> {/* Pass onRemove to PostDropdown */}
