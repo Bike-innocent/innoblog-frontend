@@ -12,28 +12,32 @@ const Comment = ({ comment, onReply, onEdit, onDelete, onReport }) => {
 
   const handleReplyClick = () => {
     if (isReply) {
-        onReply(comment.id, displayUsername);
+      onReply(comment.id, displayUsername);
     } else {
-        onReply(comment.id);
+      onReply(comment.id);
     }
-};
+  };
 
   return (
     <div className="mb-4 ">
       <div className={`flex  mt-1  ${isReply ? 'ml-4' : ''}`}>
         <Link to={`/${comment.user.username}`}>
           {isReply ? (
-            <PlaceholderImageReply
-              name={comment.user?.name}
-              avatar={comment.user?.avatar_url}
-              placeholderColor={comment.user?.placeholder_color}
-            />
+            <div className='w-12'>
+              <PlaceholderImageReply
+                name={comment.user?.name}
+                avatar={comment.user?.avatar_url}
+                placeholderColor={comment.user?.placeholder_color}
+              />
+            </div>
           ) : (
-            <PlaceholderImage
-              name={comment.user?.name}
-              avatar={comment.user?.avatar_url}
-              placeholderColor={comment.user?.placeholder_color}
-            />
+            <div className='w-10'>
+              <PlaceholderImage
+                name={comment.user?.name}
+                avatar={comment.user?.avatar_url}
+                placeholderColor={comment.user?.placeholder_color}
+              />
+            </div>
           )}
         </Link>
         <div className="ml-2 flex-grow">
