@@ -18,7 +18,8 @@ const Post = ({ post, }) => {
                         className="w-full h-[210px] border-1 border-gray-200 sm:h-[280px] md:h-[250px] object-cover rounded-lg group-hover:opacity-75 transition-opacity"
                     />
                 </Link>
-                <div className="flex pt-2">
+
+                <div className="flex pt-2 ">
                     <Link to={`/${post.user.username}`} className="w-14">
                         <PlaceholderImage
                             name={post.user.name}
@@ -32,8 +33,12 @@ const Post = ({ post, }) => {
                                 {post.title.length > 50 ? `${post.title.substring(0, 50)}...` : post.title}
                             </h2>
                         </Link>
-                        <PostDropdown post={post}  setSuccessMessage={notifySuccess} />
+                        
                     </div>
+                    <div>
+                    <PostDropdown post={post}  setSuccessMessage={notifySuccess} />
+                    </div>
+                   
                 </div>
                 <p className="text-gray-500">{post.user.name}</p>
             </div>
