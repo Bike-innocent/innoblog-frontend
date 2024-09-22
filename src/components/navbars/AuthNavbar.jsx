@@ -74,13 +74,13 @@ function AuthNavbar({ toggleSidebar }) {
             <SearchInput />
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
+            {/* <button
               type="button"
               className="rounded-full mr-2 bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none"
             >
               <span className="sr-only">View notifications</span>
               <FaBell className="h-6 w-6" />
-            </button>
+            </button> */}
 
             <Dropdown>
               <DropdownTrigger>

@@ -222,8 +222,6 @@
 // export default EditPost;
 
 
-
-
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -238,7 +236,7 @@ const EditPost = () => {
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState('');
-    const [subCategory, setSubCategory] = useState(''); // Ensure this is not immediately reset
+    const [subCategory, setSubCategory] = useState('');
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [filteredSubCategories, setFilteredSubCategories] = useState([]);
@@ -275,18 +273,13 @@ const EditPost = () => {
     }, [slug]);
 
     useEffect(() => {
-        // Only filter subcategories if category and subCategories are loaded
-        if (category) {
-            const filtered = subCategories.filter(sub => sub.category_id === parseInt(category));
-            setFilteredSubCategories(filtered);
+        // Filter subcategories based on the selected category
+        const filtered = subCategories.filter(sub => sub.category_id === parseInt(category));
+        setFilteredSubCategories(filtered);
 
-            // Set subCategory only if it doesn't match any in the filtered subcategories
-            if (!filtered.some(sub => sub.id === parseInt(subCategory))) {
-                // Only set subCategory to the first if subCategory is not already set
-                if (!subCategory) {
-                    setSubCategory(filtered.length > 0 ? filtered[0].id : '');
-                }
-            }
+        // If subCategory is not set or doesn't match the new category, automatically set the first subcategory
+        if (filtered.length > 0 && !filtered.some(sub => sub.id === parseInt(subCategory))) {
+            setSubCategory(filtered[0].id); // Automatically select the first subcategory if none matches
         }
     }, [category, subCategories]);
 

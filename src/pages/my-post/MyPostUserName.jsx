@@ -125,19 +125,29 @@ const MyPostUserName = ({ username }) => {
           </Tab.List>
           <Tab.Panels className="mt-2">
             <Tab.Panel>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
-                {publishedPosts.map((post) => (
-                  <PublishedUsername key={post.slug} post={post} refreshPosts={refreshPosts} isAuthUser={isAuthUser} />
-                ))}
-              </div>
+
+              {publishedPosts.length === 0 ? (
+                <p className="text-center text-gray-500">No published posts to display.</p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
+                  {publishedPosts.map((post) => (
+                    <PublishedUsername key={post.slug} post={post} refreshPosts={refreshPosts} isAuthUser={isAuthUser} />
+                  ))}
+                </div>
+              )}
             </Tab.Panel>
             {isAuthUser && (
               <Tab.Panel>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
-                  {draftPosts.map((post) => (
-                    <Draft key={post.slug} post={post} refreshPosts={refreshPosts} />
-                  ))}
-                </div>
+
+                {draftPosts.length === 0 ? (
+                  <p className="text-center text-gray-500">No draft posts to display.</p>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 m-0">
+                    {draftPosts.map((post) => (
+                      <Draft key={post.slug} post={post} refreshPosts={refreshPosts} />
+                    ))}
+                  </div>
+                )}
               </Tab.Panel>
             )}
           </Tab.Panels>
