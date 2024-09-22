@@ -6,7 +6,7 @@ import {
   WhatsappShareButton,
   LinkedinShareButton,
   FacebookIcon,
-  TwitterIcon,
+  XIcon,
   WhatsappIcon,
   LinkedinIcon,
 } from 'react-share';
@@ -57,7 +57,7 @@ const Share = ({ isOpen, onClose, postUrl }) => {
                     <FacebookIcon size={48} round />
                   </FacebookShareButton>
                   <TwitterShareButton url={postUrl}>
-                    <TwitterIcon size={48} round />
+                    <XIcon size={48} round />
                   </TwitterShareButton>
                   <WhatsappShareButton url={postUrl}>
                     <WhatsappIcon size={48} round />
