@@ -5,6 +5,7 @@ function AboutTab() {
         <>
            
                 <div className="grid grid-cols-1">
+                <img src="assets/images/about/about3.png" alt="about me" />
                     <h4 className="text-black-800 text-2xl lg:text-[32px] font-bold font-Syne mb-6">Based in German</h4>
                     <p className="paragraph mb-7">Mark Henry, <span className="text-black-800">Product Designer</span>,
                         based
