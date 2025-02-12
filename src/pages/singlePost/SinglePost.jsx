@@ -40,10 +40,10 @@ export default SinglePost;
 //   const { slug } = useParams();
 
 //   // Fetch the post data
-//   const { data: post, isLoading, isError, error } = useQuery({
-//     queryKey: ['post', slug],
-//     queryFn: () => fetchPost(slug),
-//   });
+  // const { data: post, isLoading, isError, error } = useQuery({
+  //   queryKey: ['post', slug],
+  //   queryFn: () => fetchPost(slug),
+  // });
 
 //   // Scroll to the top when the component mounts
 //   useEffect(() => {
