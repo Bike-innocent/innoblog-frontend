@@ -84,9 +84,9 @@
 //   };
 
 //   return (
-//     <div className="max-w-md mx-auto mt-12 shadow-md p-4">
+//     <div className="max-w-md p-4 mx-auto mt-12 shadow-md">
 //        <Title title={`Login`} />
-//       <h1 className="text-2xl font-bold mb-4"> Login</h1>
+//       <h1 className="mb-4 text-2xl font-bold"> Login</h1>
 
 //       {/* Manual login form */}
 //       <form onSubmit={handleSubmit}>
@@ -95,7 +95,7 @@
 //           value={email}
 //           onChange={(e) => setEmail(e.target.value)}
 //           placeholder="Email"
-//           className="border p-2 mt-2 w-full"
+//           className="w-full p-2 mt-2 border"
 //         />
 //         {errors.email && <p className="text-red-600">{errors.email[0]}</p>}
 
@@ -104,7 +104,7 @@
 //           value={password}
 //           onChange={(e) => setPassword(e.target.value)}
 //           placeholder="Password"
-//           className="border p-2 mt-2 w-full"
+//           className="w-full p-2 mt-2 border"
 //         />
 //         {errors.password && <p className="text-red-600">{errors.password[0]}</p>}
 
@@ -112,12 +112,12 @@
 //           <Link to="/forgot-password" className="text-blue-700">Forgot password?</Link>
 //         </p>
 
-//         <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 w-full">
+//         <button type="submit" className="w-full px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-600">
 //           Login
 //         </button>
 
 //         {/* Display general error if exists */}
-//         {generalError && <p className="text-red-600 mt-2">{generalError}</p>}
+//         {generalError && <p className="mt-2 text-red-600">{generalError}</p>}
 //       </form>
 
 //       <div className="mt-4">
@@ -208,9 +208,9 @@ function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-12 shadow-md p-4">
+    <div className="max-w-md p-4 mx-auto mt-12 shadow-md">
       <Title title={`Login`} />
-      <h1 className="text-2xl font-bold mb-4"> Login</h1>
+      <h1 className="mb-4 text-2xl font-bold"> Login</h1>
 
       {/* Manual login form */}
       <form onSubmit={handleSubmit}>
@@ -219,7 +219,7 @@ function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="border p-2 mt-2 w-full"
+          className="w-full p-2 mt-2 border"
         />
         {errors.email && <p className="text-red-600">{errors.email[0]}</p>}
 
@@ -230,11 +230,11 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="border p-2 w-full pr-10" // Add padding for the icon
+            className="w-full p-2 pr-10 border" // Add padding for the icon
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-2 top-3 cursor-pointer text-gray-800"
+            className="absolute text-gray-800 cursor-pointer right-2 top-3"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
@@ -245,12 +245,12 @@ function Login() {
           <Link to="/forgot-password" className="text-blue-700">Forgot password?</Link>
         </p>
 
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600 w-full">
+        <button type="submit" className="w-full px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-600">
           Login
         </button>
 
         {/* Display general error if exists */}
-        {generalError && <p className="text-red-600 mt-2">{generalError}</p>}
+        {generalError && <p className="mt-2 text-red-600">{generalError}</p>}
       </form>
 
       <div className="mt-4">
